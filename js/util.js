@@ -24,7 +24,7 @@ export const util = (() => {
     };
 
     const escapeHtml = (unsafe) => {
-        return unsafe
+        return String(unsafe)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
@@ -118,14 +118,11 @@ export const util = (() => {
         return decoder.decode(decodedBytes);
     };
 
-    const close = () => {
-        storage('information').set('info', true);
-    };
+    const closeInformation = () => storage('information').set('info', true);
 
     return {
         open,
         copy,
-        close,
         modal,
         timeOut,
         opacity,
@@ -134,6 +131,7 @@ export const util = (() => {
         base64Encode,
         base64Decode,
         disableButton,
+        closeInformation,
         addLoadingCheckbox,
     };
 })();

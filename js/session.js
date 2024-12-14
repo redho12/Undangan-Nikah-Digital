@@ -23,13 +23,9 @@ export const session = (() => {
             .then((res) => res.code === 200, () => false);
     };
 
-    const logout = () => {
-        session.unset('token');
-    };
+    const logout = () => session.unset('token');
 
-    const isAdmin = () => {
-        return (getToken() ?? '.').split('.').length === 3;
-    };
+    const isAdmin = () => String(getToken() ?? '.').split('.').length === 3;
 
     const guest = () => {
         progress.add();

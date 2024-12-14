@@ -1,8 +1,19 @@
 export const audio = (() => {
 
+    /**
+     * @type {HTMLElement|null}
+     */
     let music = null;
+
+    /**
+     * @type {HTMLAudioElement|null}
+     */
     let audio = null;
+
     let isPlay = false;
+
+    const statePlay = '<i class="fa-solid fa-circle-pause spin-button"></i>';
+    const statePause = '<i class="fa-solid fa-circle-play"></i>';
 
     const init = () => {
         music = document.getElementById('button-music');
@@ -25,7 +36,7 @@ export const audio = (() => {
         try {
             await audio.play();
             isPlay = true;
-            music.innerHTML = '<i class="fa-solid fa-circle-pause spin-button"></i>';
+            music.innerHTML = statePlay;
         } catch (err) {
             isPlay = false;
             alert(err);
@@ -36,7 +47,7 @@ export const audio = (() => {
     const pause = () => {
         isPlay = false;
         audio.pause();
-        music.innerHTML = '<i class="fa-solid fa-circle-play"></i>';
+        music.innerHTML = statePause;
     };
 
     const showButton = () => {

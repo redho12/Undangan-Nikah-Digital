@@ -15,7 +15,7 @@ export const request = (method, path) => {
 
     let url = document.body.getAttribute('data-url');
     let req = {
-        method: method,
+        method: String(method).toUpperCase(),
         headers: new Headers({
             'Accept': 'application/json',
             'Content-Type': 'application/json'
