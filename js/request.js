@@ -11,15 +11,17 @@ export const HTTP_DELETE = 'DELETE';
 export const request = (method, path) => {
 
     const controller = new AbortController();
+    const header = new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    });
+
     offline.addAbort(() => controller.abort());
 
     let url = document.body.getAttribute('data-url');
     let req = {
         method: String(method).toUpperCase(),
-        headers: new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }),
+        headers: header,
         signal: controller.signal,
     };
 
@@ -60,6 +62,9 @@ export const request = (method, path) => {
                     throw new Error(err);
                 });
         },
+        /**
+         * @returns {Promise<boolean>}
+         */
         download() {
             return fetch(url + path, req)
                 .then((res) => {
@@ -101,6 +106,10 @@ export const request = (method, path) => {
                     throw new Error(err);
                 });
         },
+        /**
+         * @param {string} token
+         * @returns {this}
+         */
         token(token) {
             if (session.isAdmin()) {
                 req.headers.append('Authorization', 'Bearer ' + token);
@@ -110,6 +119,10 @@ export const request = (method, path) => {
             req.headers.append('x-access-key', token);
             return this;
         },
+        /**
+         * @param {object} body
+         * @returns {this}
+         */
         body(body) {
             req.body = JSON.stringify(body);
             return this;

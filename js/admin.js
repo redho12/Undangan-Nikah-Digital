@@ -251,8 +251,8 @@ export const admin = (() => {
         comment.init();
 
         try {
-            // window.atob can throw error
-            if (!session.isAdmin() || !session.getToken() || (JSON.parse(window.atob(session.getToken().split('.')[1]))?.exp ?? 0) < (Date.now() / 1000)) {
+            const jwt = session.decode();
+            if (!jwt || (jwt.exp ?? 0) < (Date.now() / 1000)) {
                 throw new Error('invalid token');
             }
 

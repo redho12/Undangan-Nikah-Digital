@@ -1,59 +1,98 @@
 import { dto } from './dto.js';
 import { storage } from './storage.js';
-import { progress } from './progress.js';
 import { request, HTTP_POST, HTTP_GET } from './request.js';
 
 export const session = (() => {
 
-    let session = null;
+    /**
+     * @type {ReturnType<typeof storage>}
+     */
+    let ses = null;
 
-    const getToken = () => session.get('token');
+    /**
+     * @returns {string}
+     */
+    const getToken = () => ses.get('token');
 
+    /**
+     * @param {object} body
+     * @returns {Promise<boolean>}
+     */
     const login = (body) => {
         return request(HTTP_POST, '/api/session')
             .body(body)
             .send(dto.tokenResponse)
-            .then((res) => {
-                if (res.code === 200) {
-                    session.set('token', res.data.token);
-                }
+            .then(
+                (res) => {
+                    if (res.code === 200) {
+                        setToken(res.data.token);
+                    }
 
-                return res;
-            })
-            .then((res) => res.code === 200, () => false);
+                    return res.code === 200;
+                },
+                () => false
+            );
     };
 
-    const logout = () => session.unset('token');
+    /**
+     * @returns {void}
+     */
+    const logout = () => ses.unset('token');
 
-    const isAdmin = () => String(getToken() ?? '.').split('.').length === 3;
+    /**
+     * @param {string} token
+     * @returns {void}
+     */
+    const setToken = (token) => ses.set('token', token);
 
+    /**
+     * @returns {boolean}
+     */
+    const isAdmin = () => getToken().split('.').length === 3;
+
+    /**
+     * @returns {Promise<ReturnType<typeof dto.baseResponse<object>>}
+     */
     const guest = () => {
-        progress.add();
+        const config = storage('config');
+
         return request(HTTP_GET, '/api/config')
             .token(document.body.getAttribute('data-key'))
             .send()
             .then((res) => {
                 if (res.code !== 200) {
-                    progress.invalid('request');
                     return res;
                 }
 
-                const config = storage('config');
                 for (let [key, value] of Object.entries(res.data)) {
                     config.set(key, value);
                 }
 
-                session.set('token', document.body.getAttribute('data-key'));
-                progress.complete('request');
-
+                setToken(document.body.getAttribute('data-key'));
                 return res;
-            }).catch(() => {
-                progress.invalid('request');
             });
     };
 
+    /**
+     * @returns {object|null}
+     */
+    const decode = () => {
+        if (!isAdmin()) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(window.atob(getToken().split('.')[1]));
+        } catch {
+            return null;
+        }
+    };
+
+    /**
+     * @returns {void}
+     */
     const init = () => {
-        session = storage('session');
+        ses = storage('session');
     };
 
     return {
@@ -61,7 +100,9 @@ export const session = (() => {
         guest,
         login,
         logout,
+        decode,
         isAdmin,
+        setToken,
         getToken,
     };
 })();

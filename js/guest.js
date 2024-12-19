@@ -145,18 +145,23 @@ export const guest = (() => {
             return;
         }
 
-        comment.init();
         progress.add();
+        progress.add();
+        comment.init();
+
         session.guest()
             .then((res) => {
                 if (res.code !== 200) {
+                    progress.invalid('request');
                     return res;
                 }
 
-                return comment.comment()
+                progress.complete('request');
+                comment.comment()
                     .then(() => progress.complete('comment'))
                     .catch(() => progress.invalid('comment'));
-            });
+            })
+            .catch(() => progress.invalid('request'));
     };
 
     return {
