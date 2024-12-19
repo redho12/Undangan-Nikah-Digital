@@ -119,6 +119,5 @@ export const offline = (() => {
     return {
         init,
         isOnline,
-        addAbort,
     };
 })();
