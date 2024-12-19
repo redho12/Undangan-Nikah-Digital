@@ -10,7 +10,7 @@ export const session = (() => {
     let ses = null;
 
     /**
-     * @returns {string}
+     * @returns {string|null}
      */
     const getToken = () => ses.get('token');
 
@@ -48,7 +48,7 @@ export const session = (() => {
     /**
      * @returns {boolean}
      */
-    const isAdmin = () => getToken().split('.').length === 3;
+    const isAdmin = () => String(getToken() ?? '.').split('.').length === 3;
 
     /**
      * @returns {Promise<ReturnType<typeof dto.baseResponse<object>>}
