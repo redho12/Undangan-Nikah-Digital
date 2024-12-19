@@ -1,5 +1,8 @@
 export const offline = (() => {
 
+    /**
+     * @type {HTMLElement|null}
+     */
     let alert = null;
     let online = true;
 

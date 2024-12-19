@@ -143,26 +143,7 @@ export const theme = (() => {
         }
     };
 
-    const spyTop = () => {
-        const observerTop = new IntersectionObserver((es) => {
-            es.filter((e) => e.isIntersecting).forEach((e) => {
-                const themeColor = ['bg-black', 'bg-white'].some((i) => e.target.classList.contains(i))
-                    ? isDarkMode(themeDark[0], themeLight[0])
-                    : isDarkMode(themeDark[1], themeLight[1]);
-
-                metaTheme.setAttribute('content', themeColor);
-            });
-        }, {
-            rootMargin: '0% 0% -95% 0%',
-        });
-
-        document.querySelectorAll('section').forEach((e) => observerTop.observe(e));
-    };
-
-    const init = () => {
-        theme = storage('theme');
-        metaTheme = document.querySelector('meta[name="theme-color"]');
-
+    const initObserver = () => {
         observerLight = new IntersectionObserver((es, o) => {
 
             es.filter((e) => e.isIntersecting).forEach((e) => toLight(e.target));
@@ -184,6 +165,29 @@ export const theme = (() => {
             const now = metaTheme.getAttribute('content');
             metaTheme.setAttribute('content', themeLight.some((i) => i === now) ? themeColors[now] : now);
         });
+    };
+
+    const spyTop = () => {
+        const observerTop = new IntersectionObserver((es) => {
+            es.filter((e) => e.isIntersecting).forEach((e) => {
+                const themeColor = ['bg-black', 'bg-white'].some((i) => e.target.classList.contains(i))
+                    ? isDarkMode(themeDark[0], themeLight[0])
+                    : isDarkMode(themeDark[1], themeLight[1]);
+
+                metaTheme.setAttribute('content', themeColor);
+            });
+        }, {
+            rootMargin: '0% 0% -95% 0%',
+        });
+
+        document.querySelectorAll('section').forEach((e) => observerTop.observe(e));
+    };
+
+    const init = () => {
+        theme = storage('theme');
+        metaTheme = document.querySelector('meta[name="theme-color"]');
+
+        initObserver();
 
         if (!theme.has('active')) {
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {

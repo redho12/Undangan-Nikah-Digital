@@ -2,7 +2,14 @@ import { guest } from './guest.js';
 
 export const progress = (() => {
 
+    /**
+     * @type {HTMLElement|null}
+     */
     let info = null;
+
+    /**
+     * @type {HTMLElement|null}
+     */
     let bar = null;
 
     let total = 0;

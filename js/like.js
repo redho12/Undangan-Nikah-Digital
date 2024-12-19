@@ -1,5 +1,4 @@
 import { dto } from './dto.js';
-import { offline } from './offline.js';
 import { storage } from './storage.js';
 import { session } from './session.js';
 import { confetti } from './confetti.js';
@@ -7,6 +6,9 @@ import { request, HTTP_PATCH, HTTP_POST } from './request.js';
 
 export const like = (() => {
 
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
     let likes = null;
 
     const like = async (button) => {
@@ -101,7 +103,7 @@ export const like = (() => {
     };
 
     const tapTap = async (div) => {
-        if (!offline.isOnline()) {
+        if (!navigator.onLine) {
             return;
         }
 

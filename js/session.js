@@ -5,7 +5,7 @@ import { request, HTTP_POST, HTTP_GET } from './request.js';
 export const session = (() => {
 
     /**
-     * @type {ReturnType<typeof storage>}
+     * @type {ReturnType<typeof storage>|null}
      */
     let ses = null;
 

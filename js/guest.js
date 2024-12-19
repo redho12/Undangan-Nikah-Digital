@@ -9,6 +9,9 @@ import { confetti } from './confetti.js';
 
 export const guest = (() => {
 
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
     let information = null;
 
     const countDownDate = () => {
