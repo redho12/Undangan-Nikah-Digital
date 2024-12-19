@@ -1,5 +1,4 @@
 import { dto } from './dto.js';
-import { offline } from './offline.js';
 import { session } from './session.js';
 
 export const HTTP_GET = 'GET';
@@ -10,19 +9,13 @@ export const HTTP_DELETE = 'DELETE';
 
 export const request = (method, path) => {
 
-    const controller = new AbortController();
-    const header = new Headers({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    });
-
-    offline.addAbort(() => controller.abort());
-
     let url = document.body.getAttribute('data-url');
     let req = {
         method: String(method).toUpperCase(),
-        headers: header,
-        signal: controller.signal,
+        headers: new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }),
     };
 
     if (url.slice(-1) === '/') {

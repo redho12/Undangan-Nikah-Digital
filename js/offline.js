@@ -2,7 +2,6 @@ export const offline = (() => {
 
     let alert = null;
     let online = true;
-    let abort = [];
 
     const show = (isUp = true) => new Promise((res) => {
         let op = parseFloat(alert.style.opacity);
@@ -87,7 +86,6 @@ export const offline = (() => {
         setOffline();
         show();
         changeState();
-        abort.forEach((a) => a());
     };
 
     const onOnline = () => {
@@ -100,14 +98,19 @@ export const offline = (() => {
 
     const isOnline = () => online;
 
-    const addAbort = (callback) => {
-        abort.push(callback);
-    };
-
     const init = () => {
         window.addEventListener('online', onOnline);
         window.addEventListener('offline', onOffline);
         alert = document.getElementById('offline-mode');
+
+        if (alert.childElementCount === 0) {
+            alert.innerHTML = `
+            <div class="d-flex justify-content-center mx-auto">
+                <div class="d-flex justify-content-center align-items-center rounded-pill my-2 bg-danger shadow">
+                    <small class="text-center py-1 px-2 mx-1 text-white" style="font-size: 0.8rem;"></small>
+                </div>
+            </div>`;
+        }
     };
 
     return {
