@@ -77,7 +77,7 @@ export const guest = (() => {
         const raw = window.location.search.split('to=');
         let name = null;
 
-        if (raw.length > 1 && raw[1].length > 0) {
+        if (raw.length >= 2 && raw[1].length > 0) {
             name = decodeURIComponent(raw[1]);
 
             const guest = document.getElementById('guest-name');
@@ -116,6 +116,7 @@ export const guest = (() => {
 
         theme.spyTop();
         theme.showButtonChangeTheme();
+
         util.timeOut(animation, 1500);
     };
 
@@ -133,8 +134,9 @@ export const guest = (() => {
             storage('tracker').clear();
         }
 
-        if (information.get('presence') !== undefined) {
-            document.getElementById('form-presence').value = information.get('presence') ? '1' : '2';
+        const presence = information.get('presence');
+        if (presence !== undefined) {
+            document.getElementById('form-presence').value = presence ? '1' : '2';
         }
 
         const info = document.getElementById('information');
