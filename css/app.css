@@ -32,12 +32,12 @@
 }
 
 .btn-float.bg-dark {
-    background-color: rgba(var(--bs-dark-rgb), 0.95) !important;
+    background-color: rgba(var(--bs-dark-rgb), 0.9) !important;
     backdrop-filter: blur(0.625rem);
 }
 
 .btn-float.bg-light {
-    background-color: rgba(var(--bs-light-rgb), 0.95) !important;
+    background-color: rgba(var(--bs-light-rgb), 0.9) !important;
     backdrop-filter: blur(0.625rem);
 }
 
