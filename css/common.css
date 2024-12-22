@@ -22,11 +22,13 @@ svg>path {
 }
 
 .navbar.bg-dark {
-    background-color: rgba(var(--bs-dark-rgb), 0.9) !important;
+    background-color: rgba(var(--bs-dark-rgb), 0.95) !important;
+    backdrop-filter: blur(0.625rem);
 }
 
 .navbar.bg-light {
-    background-color: rgba(var(--bs-light-rgb), 0.9) !important;
+    background-color: rgba(var(--bs-light-rgb), 0.95) !important;
+    backdrop-filter: blur(0.625rem);
 }
 
 .bg-theme-light {
