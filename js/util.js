@@ -4,31 +4,6 @@ import { bootstrap } from './bootstrap.js';
 export const util = (() => {
 
     /**
-     * @param {string} id
-     * @param {number} speed
-     * @returns {void}
-     */
-    const opacity = (id, speed = 0.01) => {
-        const el = document.getElementById(id);
-        let op = parseInt(el.style.opacity);
-
-        let clear = null;
-        const callback = () => {
-            if (op > 0) {
-                el.style.opacity = op.toFixed(3);
-                op -= speed;
-                return;
-            }
-
-            clearInterval(clear);
-            clear = null;
-            el.remove();
-        };
-
-        clear = setInterval(callback, 10);
-    };
-
-    /**
      * @param {string} unsafe
      * @returns {string}
      */
@@ -150,23 +125,16 @@ export const util = (() => {
         return decoder.decode(decodedBytes);
     };
 
-    /**
-     * @returns {void}
-     */
-    const closeInformation = () => storage('information').set('info', true);
-
     return {
         open,
         copy,
         modal,
         timeOut,
-        opacity,
         animate,
         escapeHtml,
         base64Encode,
         base64Decode,
         disableButton,
-        closeInformation,
         addLoadingCheckbox,
     };
 })();

@@ -39,15 +39,12 @@ export const request = (method, path) => {
                             throw new Error(json.error[0]);
                         }
 
-                        return json;
-                    });
-                })
-                .then((res) => {
-                    if (transform) {
-                        res.data = transform(res.data);
-                    }
+                        if (transform) {
+                            json.data = transform(json.data);
+                        }
 
-                    return dto.baseResponse(res.code, res.data, res.error);
+                        return dto.baseResponse(json.code, json.data, json.error);
+                    });
                 })
                 .catch((err) => {
                     alert(err);
@@ -61,7 +58,7 @@ export const request = (method, path) => {
             return fetch(url + path, req)
                 .then((res) => {
                     if (res.status !== 200) {
-                        return null;
+                        return false;
                     }
 
                     const existingLink = document.querySelector('a[download]');
@@ -70,28 +67,22 @@ export const request = (method, path) => {
                     }
 
                     const filename = res.headers.get('content-disposition')?.match(/filename="(.+)"/)?.[1] ?? 'download.csv';
-                    return res.blob().then((blob) => ({ blob, filename }));
-                })
-                .then((res) => {
-                    if (res === null) {
-                        return false;
-                    }
 
-                    const { blob, filename } = res;
+                    return res.blob().then((blob) => {
+                        const link = document.createElement('a');
+                        const href = window.URL.createObjectURL(blob);
 
-                    const link = document.createElement('a');
-                    const href = window.URL.createObjectURL(blob);
+                        link.href = href;
+                        link.download = filename;
+                        document.body.appendChild(link);
 
-                    link.href = href;
-                    link.download = filename;
-                    document.body.appendChild(link);
+                        link.click();
 
-                    link.click();
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(href);
 
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(href);
-
-                    return true;
+                        return true;
+                    });
                 })
                 .catch((err) => {
                     alert(err);

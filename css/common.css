@@ -21,6 +21,14 @@ svg>path {
     transition: color 350ms ease;
 }
 
+.navbar.bg-dark {
+    background-color: rgba(var(--bs-dark-rgb), 0.9) !important;
+}
+
+.navbar.bg-light {
+    background-color: rgba(var(--bs-light-rgb), 0.9) !important;
+}
+
 .bg-theme-light {
     background-color: var(--bs-gray-100);
 }

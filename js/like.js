@@ -11,6 +11,12 @@ export const like = (() => {
      */
     let likes = null;
 
+    /**
+     * Handles the like button functionality.
+     * 
+     * @param {HTMLButtonElement} button - The button element that was clicked.
+     * @returns {Promise<void>} - A promise that resolves when the like action is complete.
+     */
     const like = async (button) => {
         const id = button.getAttribute('data-uuid');
 
@@ -58,6 +64,11 @@ export const like = (() => {
         button.disabled = false;
     };
 
+    /**
+     * Triggers a confetti animation with heart shapes around a specified div element.
+     *
+     * @param {HTMLElement} div - The div element around which the confetti animation will occur.
+     */
     const animation = (div) => {
         if (!confetti) {
             return;
@@ -102,6 +113,13 @@ export const like = (() => {
         }());
     };
 
+    /**
+     * Handles the tap event on a given div element. If the tap is detected within a certain time frame,
+     * it triggers a like action and an animation.
+     *
+     * @param {HTMLElement} div - The div element that was tapped.
+     * @returns {Promise<void>} - A promise that resolves when the like action is complete.
+     */
     const tapTap = async (div) => {
         if (!navigator.onLine) {
             return;
@@ -124,6 +142,9 @@ export const like = (() => {
         div.setAttribute('data-tapTime', currentTime);
     };
 
+    /**
+     * Initializes the likes variable by retrieving it from storage.
+     */
     const init = () => {
         likes = storage('likes');
     };

@@ -26,16 +26,17 @@
     object-fit: cover;
 }
 
-.btn-music {
-    bottom: 9vh;
+.btn-float {
     right: 2vh;
     z-index: 1055;
 }
 
-.btn-theme {
-    bottom: 15vh;
-    right: 2vh;
-    z-index: 1055;
+.btn-float.bg-dark {
+    background-color: rgba(var(--bs-dark-rgb), 0.9) !important;
+}
+
+.btn-float.bg-light {
+    background-color: rgba(var(--bs-light-rgb), 0.9) !important;
 }
 
 .loading-page {

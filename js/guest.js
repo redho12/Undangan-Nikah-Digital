@@ -10,6 +10,31 @@ import { confetti } from './confetti.js';
 export const guest = (() => {
 
     /**
+     * @param {string} id
+     * @param {number} speed
+     * @returns {void}
+     */
+    const opacity = (id, speed = 0.01) => {
+        const el = document.getElementById(id);
+        let op = parseFloat(el.style.opacity);
+
+        let clear = null;
+        const callback = () => {
+            if (op > 0) {
+                el.style.opacity = op.toFixed(3);
+                op -= speed;
+                return;
+            }
+
+            clearInterval(clear);
+            clear = null;
+            el.remove();
+        };
+
+        clear = setInterval(callback, 10);
+    };
+
+    /**
      * @type {ReturnType<typeof storage>|null}
      */
     let information = null;
@@ -97,7 +122,7 @@ export const guest = (() => {
             form.value = information.get('name') ?? name;
         }
 
-        util.opacity('loading', 0.025);
+        opacity('loading', 0.025);
     };
 
     const open = (button) => {
@@ -109,7 +134,7 @@ export const guest = (() => {
             zIndex: 1057
         });
 
-        util.opacity('welcome', 0.025);
+        opacity('welcome', 0.025);
 
         audio.play();
         audio.showButton();
@@ -119,6 +144,11 @@ export const guest = (() => {
 
         util.timeOut(animation, 1500);
     };
+
+    /**
+     * @returns {void}
+     */
+    const closeInformation = () => information.set('info', true);
 
     const init = () => {
         session.init();
@@ -173,5 +203,6 @@ export const guest = (() => {
         init,
         open,
         name,
+        closeInformation,
     };
 })();
