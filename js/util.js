@@ -1,4 +1,3 @@
-import { storage } from './storage.js';
 import { bootstrap } from './bootstrap.js';
 
 export const util = (() => {
