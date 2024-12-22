@@ -8,6 +8,7 @@
 [![GitHub License](https://img.shields.io/github/license/dewanakl/undangan?color=brightgreen)](https://shields.io)
 
 ## Demo
+Kamu dapat mencoba undangan ini melalui link berikut.
 
 [https://ulems.my.id/?to=Teman%20teman%20semua](https://ulems.my.id/?to=Teman%20teman%20semua)
 
@@ -17,7 +18,11 @@
 - Presentation
     [https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
 
+- Video\
+    otw
+
 ## Trial API
+Untuk kamu yang ingin mencoba API secara gratis sebelum melakukan deploy, silakan kunjungi link berikut.
 
 [https://payment.ulems.my.id](https://payment.ulems.my.id)
 
