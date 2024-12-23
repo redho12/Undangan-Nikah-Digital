@@ -217,9 +217,9 @@ export const theme = (() => {
     };
 
     return {
-        change,
         init,
         spyTop,
+        change,
         isDarkMode,
         showButtonChangeTheme
     };

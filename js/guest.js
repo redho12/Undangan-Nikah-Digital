@@ -146,6 +146,15 @@ export const guest = (() => {
     };
 
     /**
+     * @param {HTMLImageElement} img
+     * @returns {void}
+     */
+    const modal = (img) => {
+        document.getElementById('show-modal-image').src = img.src;
+        bootstrap.Modal.getOrCreateInstance('#modal-image').show();
+    };
+
+    /**
      * @returns {void}
      */
     const closeInformation = () => information.set('info', true);
@@ -177,12 +186,14 @@ export const guest = (() => {
         if (document.body.getAttribute('data-key')?.length === 0) {
             document.getElementById('comment')?.remove();
             document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
+            progress.init();
             return;
         }
 
         progress.add();
         progress.add();
         comment.init();
+        progress.init();
 
         session.guest()
             .then((res) => {
@@ -203,6 +214,7 @@ export const guest = (() => {
         init,
         open,
         name,
+        modal,
         closeInformation,
     };
 })();

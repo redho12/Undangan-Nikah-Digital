@@ -5,7 +5,6 @@ import { theme } from './theme.js';
 import { audio } from './audio.js';
 import { offline } from './offline.js';
 import { comment } from './comment.js';
-import { progress } from './progress.js';
 import { pagination } from './pagination.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.init();
     guest.init();
     offline.init();
-    progress.init();
     pagination.init();
     window.AOS.init();
 

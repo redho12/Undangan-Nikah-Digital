@@ -1,5 +1,3 @@
-import { bootstrap } from './bootstrap.js';
-
 export const util = (() => {
 
     /**
@@ -68,15 +66,6 @@ export const util = (() => {
      */
     const animate = (svg, timeout, classes) => timeOut(() => svg.classList.add(classes), timeout);
 
-    /**
-     * @param {HTMLImageElement} img
-     * @returns {void}
-     */
-    const modal = (img) => {
-        document.getElementById('show-modal-image').src = img.src;
-        bootstrap.Modal.getOrCreateInstance('#modal-image').show();
-    };
-
     const copy = async (button, message = null, timeout = 1500) => {
         const copy = button.getAttribute('data-copy');
 
@@ -127,7 +116,6 @@ export const util = (() => {
     return {
         open,
         copy,
-        modal,
         timeOut,
         animate,
         escapeHtml,
