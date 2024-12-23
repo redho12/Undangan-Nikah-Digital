@@ -12,6 +12,14 @@ Kamu dapat mencoba undangan ini melalui link berikut.
 
 [https://ulems.my.id/?to=Teman%20teman%20semua](https://ulems.my.id/?to=Teman%20teman%20semua)
 
+## Documentation
+
+- Sesuaikan index.html sesuai kebutuhan.
+- Ubah `data-url` pada index dan dashboard sesuai domain backend.
+- Ubah juga `data-key` pada index sesuai dengan access key pada dashboard.
+- Deployment api bisa lihat dibawah ini atau coba gratis api selama 1 hari.
+
+Jika kamu punya pertanyaan, silakan gunakan fitur `discussions` agar teman-teman yang lain juga dapat mengetahuinya. Terima kasih. 
 
 ## Deployment API
 
