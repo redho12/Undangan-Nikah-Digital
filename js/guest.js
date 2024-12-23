@@ -129,6 +129,10 @@ export const guest = (() => {
         button.disabled = true;
         document.body.scrollIntoView({ behavior: 'instant' });
 
+        if (!theme.isAutoMode()) {
+            document.getElementById('button-theme').style.display = 'none';
+        }
+
         confetti({
             origin: { y: 1 },
             zIndex: 1057
@@ -137,10 +141,7 @@ export const guest = (() => {
         opacity('welcome', 0.025);
 
         audio.play();
-        audio.showButton();
-
         theme.spyTop();
-        theme.showButtonChangeTheme();
 
         util.timeOut(animation, 1500);
     };

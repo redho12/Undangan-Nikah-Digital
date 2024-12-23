@@ -50,14 +50,9 @@ export const audio = (() => {
         music.innerHTML = statePause;
     };
 
-    const showButton = () => {
-        music.style.display = 'block';
-    };
-
     return {
         init,
         play,
         pause,
-        showButton,
     };
 })();

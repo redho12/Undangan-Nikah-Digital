@@ -137,11 +137,7 @@ export const theme = (() => {
         }
     };
 
-    const showButtonChangeTheme = () => {
-        if (isAuto) {
-            document.getElementById('button-theme').style.display = 'block';
-        }
-    };
+    const isAutoMode = () => isAuto;
 
     const initObserver = () => {
         observerLight = new IntersectionObserver((es, o) => {
@@ -221,6 +217,6 @@ export const theme = (() => {
         spyTop,
         change,
         isDarkMode,
-        showButtonChangeTheme
+        isAutoMode,
     };
 })();
