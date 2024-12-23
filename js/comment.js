@@ -440,6 +440,7 @@ export const comment = (() => {
     const init = () => {
         like.init();
         card.init();
+        pagination.init();
 
         owns = storage('owns');
         user = storage('user');

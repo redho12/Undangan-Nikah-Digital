@@ -5,6 +5,7 @@ import { navbar } from './navbar.js';
 import { storage } from './storage.js';
 import { session } from './session.js';
 import { comment } from './comment.js';
+import { offline } from './offline.js';
 import { bootstrap } from './bootstrap.js';
 import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from './request.js';
 
@@ -235,7 +236,9 @@ export const admin = (() => {
     };
 
     const init = () => {
+        theme.init();
         session.init();
+        offline.init();
         user = storage('user');
 
         if (!session.isAdmin()) {

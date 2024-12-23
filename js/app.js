@@ -3,16 +3,11 @@ import { like } from './like.js';
 import { guest } from './guest.js';
 import { theme } from './theme.js';
 import { audio } from './audio.js';
-import { offline } from './offline.js';
 import { comment } from './comment.js';
 import { pagination } from './pagination.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    audio.init();
     guest.init();
-    theme.init();
-    offline.init();
-    pagination.init();
     window.AOS.init();
 
     window.like = like;
