@@ -6,6 +6,7 @@ import { storage } from './storage.js';
 import { comment } from './comment.js';
 import { progress } from './progress.js';
 import { confetti } from './confetti.js';
+import { bootstrap } from './bootstrap.js';
 
 export const guest = (() => {
 
