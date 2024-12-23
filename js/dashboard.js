@@ -7,8 +7,8 @@ import { comment } from './comment.js';
 import { pagination } from './pagination.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    theme.init();
     admin.init();
+    theme.init();
     offline.init();
     pagination.init();
 
