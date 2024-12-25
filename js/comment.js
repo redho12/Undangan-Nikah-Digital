@@ -327,7 +327,7 @@ export const comment = (() => {
     const comment = () => {
         card.renderLoading();
         const comments = document.getElementById('comments');
-        const onNullComment = `<div class="text-center p-4 my-2 bg-theme-${theme.isDarkMode('dark', 'light')} rounded-4 shadow"><p class="fw-bold p-0 m-0">Yuk bagikan undangan ini biar banyak komentarnya</p></div>`;
+        const onNullComment = `<div class="text-center p-4 my-2 bg-theme-${theme.isDarkMode('dark', 'light')} rounded-4 shadow"><p class="fw-bold p-0 m-0" style="font-size: 0.95rem;">Yuk bagikan undangan ini biar banyak komentarnya</p></div>`;
 
         return request(HTTP_GET, `/api/comment?per=${pagination.getPer()}&next=${pagination.getNext()}`)
             .token(session.getToken())

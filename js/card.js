@@ -146,11 +146,11 @@ export const card = (() => {
 
         return `
         <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <p class="text-${text} text-truncate m-0 p-0">${renderTitle(comment, is_parent)}</p>
+            <p class="text-${text} text-truncate m-0 p-0" style="font-size: 0.95rem;">${renderTitle(comment, is_parent)}</p>
             <small class="text-${text} m-0 p-0" style="font-size: 0.75rem;">${comment.created_at}</small>
         </div>
         <hr class="text-${text} my-1">
-        <p class="text-${text} my-1 mx-0 p-0" style="white-space: pre-wrap !important; font-size: 0.95rem;" ${moreThanMaxLength ? `data-comment="${util.base64Encode(original)}"` : ''} id="content-${comment.uuid}">${moreThanMaxLength ? (original.slice(0, maxCommentLength) + '...') : original}</p>
+        <p class="text-${text} my-1 mx-0 p-0" style="white-space: pre-wrap !important; font-size: 0.9rem;" ${moreThanMaxLength ? `data-comment="${util.base64Encode(original)}"` : ''} id="content-${comment.uuid}">${moreThanMaxLength ? (original.slice(0, maxCommentLength) + '...') : original}</p>
         ${moreThanMaxLength ? `<p class="mb-2 mt-0 mx-0 p-0"><a class="text-${text}" role="button" style="font-size: 0.85rem;" data-show="false" onclick="comment.showMore(this, '${comment.uuid}')">Selengkapnya</a></p>` : ''}`;
     };
 
