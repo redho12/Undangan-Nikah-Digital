@@ -45,7 +45,6 @@ export const audio = (() => {
         audio.volume = 1;
         audio.controls = false;
 
-        music.addEventListener('online', play);
         music.addEventListener('offline', pause);
         music.addEventListener('click', () => isPlay ? pause() : play());
     };
