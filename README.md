@@ -15,9 +15,9 @@ Kamu dapat mencoba undangan ini melalui link berikut.
 ## Documentation
 
 - Sesuaikan index.html sesuai kebutuhan.
-- Ubah `data-url` pada index dan dashboard sesuai domain backend.
-- Ubah juga `data-key` pada index sesuai dengan access key pada dashboard.
-- Deployment api bisa lihat dibawah ini atau coba gratis api selama 1 hari.
+- Ubah `data-url` pada body index dan dashboard sesuai domain backend (jika deploy sendiri).
+- Ubah juga `data-key` pada body index sesuai dengan access key pada dashboard.
+- Deployment api bisa lihat dibawah ini atau coba gratis api selama 1 hari pada trial api.
 
 Jika kamu punya pertanyaan, silakan gunakan fitur `discussions` agar teman-teman yang lain juga dapat mengetahuinya. Terima kasih. 
 
