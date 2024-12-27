@@ -71,7 +71,7 @@ export const offline = (() => {
     };
 
     const changeState = () => {
-        document.querySelectorAll('button[offline-disabled], input[offline-disabled], select[offline-disabled], textarea[offline-disabled]').forEach((e) => {
+        document.querySelectorAll('button[data-offline-disabled], input[data-offline-disabled], select[data-offline-disabled], textarea[data-offline-disabled]').forEach((e) => {
             e.dispatchEvent(new Event(isOnline() ? 'online' : 'offline'));
 
             if (e.tagName === 'BUTTON') {

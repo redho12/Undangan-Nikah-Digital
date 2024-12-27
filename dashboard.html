@@ -118,7 +118,7 @@
                             <div class="d-flex justify-content-between">
                                 <p class="fw-semibold m-1" style="color: var(--bs-gray-900);"><i class="fa-solid fa-home mx-2"></i>Home</p>
                                 <div class="d-flex">
-                                    <button class="btn btn-success rounded-3 btn-sm my-0 ms-0 me-2 pb-0" onclick="admin.download(this)" offline-disabled>
+                                    <button class="btn btn-success rounded-3 btn-sm my-0 ms-0 me-2 pb-0" onclick="admin.download(this)" data-offline-disabled>
                                         <i class="fa-solid fa-download"></i><span class="d-none d-sm-inline ms-2">Download</span>
                                     </button>
                                     <button class="btn btn-secondary rounded-3 btn-sm m-0 pb-0" onclick="theme.change()">
@@ -223,10 +223,10 @@
                         <!-- Form -->
                         <div class="bg-theme-light p-3 mt-2 rounded-4 shadow">
                             <label for="form-comment" class="form-label fw-bold"><i class="fa-solid fa-comment me-1"></i>Comment</label>
-                            <textarea class="form-control shadow-sm mb-3 rounded-4" id="form-comment" name="form-comment" rows="3" placeholder="Type to comment" offline-disabled></textarea>
+                            <textarea class="form-control shadow-sm mb-3 rounded-4" id="form-comment" name="form-comment" rows="3" placeholder="Type to comment" data-offline-disabled></textarea>
 
                             <div class="d-flex justify-content-end mb-0">
-                                <button onclick="comment.send(this)" class="btn btn-primary btn-sm rounded-4" style="font-size: 0.8rem;" offline-disabled><i class="fa-solid fa-paper-plane me-1"></i>Send</button>
+                                <button onclick="comment.send(this)" class="btn btn-primary btn-sm rounded-4" style="font-size: 0.8rem;" data-offline-disabled><i class="fa-solid fa-paper-plane me-1"></i>Send</button>
                             </div>
                         </div>
 
@@ -237,7 +237,7 @@
                         <nav class="d-flex d-none justify-content-center py-3 mb-4" id="pagination">
                             <ul class="pagination mb-0">
                                 <li class="page-item disabled" id="previous">
-                                    <button class="page-link rounded-start-4" onclick="pagination.previous(this)" offline-disabled>
+                                    <button class="page-link rounded-start-4" onclick="pagination.previous(this)" data-offline-disabled>
                                         <i class="fa-solid fa-circle-left me-1"></i>Prev
                                     </button>
                                 </li>
@@ -245,7 +245,7 @@
                                     <span class="page-link text-dark" id="page">1</span>
                                 </li>
                                 <li class="page-item" id="next">
-                                    <button class="page-link rounded-end-4" onclick="pagination.next(this)" offline-disabled>
+                                    <button class="page-link rounded-end-4" onclick="pagination.next(this)" data-offline-disabled>
                                         Next<i class="fa-solid fa-circle-right ms-1"></i>
                                     </button>
                                 </li>
@@ -272,12 +272,12 @@
                             <p class="mx-0 mt-0 mb-1 p-0 fw-bold"><i class="fa-solid fa-person me-1"></i>Name</p>
                             <form>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control form-control-sm rounded-4" id="form-name" name="form-name" oninput="admin.enableButtonName()" offline-disabled>
+                                    <input type="text" class="form-control form-control-sm rounded-4" id="form-name" name="form-name" oninput="admin.enableButtonName()" data-offline-disabled>
                                 </div>
                             </form>
 
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm btn-primary rounded-4" id="button-change-name" onclick="admin.changeName(this)" disabled offline-disabled>Change</button>
+                                <button type="button" class="btn btn-sm btn-primary rounded-4" id="button-change-name" onclick="admin.changeName(this)" disabled data-offline-disabled>Change</button>
                             </div>
                         </div>
 
@@ -287,11 +287,11 @@
 
                             <div class="input-group input-group-sm rounded-4 mb-3">
                                 <input type="text" class="form-control form-control-sm rounded-start-4" id="dashboard-accesskey" readonly>
-                                <button class="btn btn-sm btn-outline-secondary rounded-end-4" type="button" data-copy="" onclick="util.copy(this)" id="button-copy-accesskey" offline-disabled><i class="fa-solid fa-copy"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary rounded-end-4" type="button" data-copy="" onclick="util.copy(this)" id="button-copy-accesskey" data-offline-disabled><i class="fa-solid fa-copy"></i></button>
                             </div>
 
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm btn-primary rounded-4" onclick="admin.regenerate(this)" offline-disabled>Regenerate</button>
+                                <button type="button" class="btn btn-sm btn-primary rounded-4" onclick="admin.regenerate(this)" data-offline-disabled>Regenerate</button>
                             </div>
                         </div>
 
@@ -300,19 +300,19 @@
                             <p class="mx-0 mt-0 mb-1 p-0 fw-bold"><i class="fa-solid fa-sliders me-1"></i>Control</p>
 
                             <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" role="button" id="filterBadWord" onchange="admin.changeFilterBadWord(this)" offline-disabled>
+                                <input class="form-check-input" type="checkbox" role="button" id="filterBadWord" onchange="admin.changeFilterBadWord(this)" data-offline-disabled>
                                 <label class="form-check-label" for="filterBadWord">Filter Bad Word</label>
                             </div>
                             <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" role="button" id="replyComment" onchange="admin.replyComment(this)" offline-disabled>
+                                <input class="form-check-input" type="checkbox" role="button" id="replyComment" onchange="admin.replyComment(this)" data-offline-disabled>
                                 <label class="form-check-label" for="replyComment">Can Reply Comment</label>
                             </div>
                             <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" role="button" id="editComment" onchange="admin.editComment(this)" offline-disabled>
+                                <input class="form-check-input" type="checkbox" role="button" id="editComment" onchange="admin.editComment(this)" data-offline-disabled>
                                 <label class="form-check-label" for="editComment">Can Edit Comment</label>
                             </div>
                             <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" role="button" id="deleteComment" onchange="admin.deleteComment(this)" offline-disabled>
+                                <input class="form-check-input" type="checkbox" role="button" id="deleteComment" onchange="admin.deleteComment(this)" data-offline-disabled>
                                 <label class="form-check-label" for="deleteComment">Can Delete Comment</label>
                             </div>
                         </div>
@@ -323,22 +323,22 @@
                             <form>
                                 <input hidden type="text" name="username" autocomplete="username" value="...">
                                 <div class="my-2">
-                                    <input type="password" class="form-control form-control-sm rounded-4" id="old_password" name="old_password" placeholder="Old Password" autocomplete="current-password" offline-disabled>
+                                    <input type="password" class="form-control form-control-sm rounded-4" id="old_password" name="old_password" placeholder="Old Password" autocomplete="current-password" data-offline-disabled>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control form-control-sm rounded-4" id="new_password" name="new_password" oninput="admin.enableButtonPassword()" placeholder="New Password" autocomplete="new-password" offline-disabled>
+                                    <input type="password" class="form-control form-control-sm rounded-4" id="new_password" name="new_password" oninput="admin.enableButtonPassword()" placeholder="New Password" autocomplete="new-password" data-offline-disabled>
                                 </div>
                             </form>
 
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm btn-primary rounded-4" id="button-change-password" onclick="admin.changePassword(this)" disabled offline-disabled>Change</button>
+                                <button type="button" class="btn btn-sm btn-primary rounded-4" id="button-change-password" onclick="admin.changePassword(this)" disabled data-offline-disabled>Change</button>
                             </div>
                         </div>
 
                         <!-- Logout -->
                         <div class="d-md-none d-lg-none d-xl-none">
                             <div class="p-3 bg-theme-light mb-3 rounded-4 shadow">
-                                <button type="button" class="btn btn-danger btn-sm w-100 text-center fw-semibold rounded-4" onclick="admin.logout()" offline-disabled>
+                                <button type="button" class="btn btn-danger btn-sm w-100 text-center fw-semibold rounded-4" onclick="admin.logout()" data-offline-disabled>
                                     <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
                                 </button>
                             </div>

@@ -418,12 +418,12 @@
 
                     <div class="mb-3">
                         <label for="form-name" class="form-label"><i class="fa-solid fa-person me-1"></i>Nama</label>
-                        <input type="text" class="form-control shadow-sm rounded-4" id="form-name" offline-disabled placeholder="Isikan Nama Anda">
+                        <input type="text" class="form-control shadow-sm rounded-4" id="form-name" placeholder="Isikan Nama Anda" data-offline-disabled>
                     </div>
 
                     <div class="mb-3">
                         <label for="form-presence" class="form-label"><i class="fa-solid fa-person-circle-question me-1"></i>Presensi</label>
-                        <select class="form-select shadow-sm rounded-4" id="form-presence" offline-disabled>
+                        <select class="form-select shadow-sm rounded-4" id="form-presence" data-offline-disabled>
                             <option value="0" selected>Konfirmasi Presensi</option>
                             <option value="1">Datang</option>
                             <option value="2">Berhalangan</option>
@@ -441,11 +441,11 @@
                         </div>
 
                         <label for="form-comment" class="form-label"><i class="fa-solid fa-comment me-1"></i>Ucapan &amp; Doa</label>
-                        <textarea class="form-control shadow-sm rounded-4" id="form-comment" rows="4" placeholder="Tulis Ucapan dan Doa" offline-disabled></textarea>
+                        <textarea class="form-control shadow-sm rounded-4" id="form-comment" rows="4" placeholder="Tulis Ucapan dan Doa" data-offline-disabled></textarea>
                     </div>
 
                     <div class="d-grid">
-                        <button class="btn btn-primary btn-sm rounded-4 shadow m-1" onclick="comment.send(this)" offline-disabled>
+                        <button class="btn btn-primary btn-sm rounded-4 shadow m-1" onclick="comment.send(this)" data-offline-disabled>
                             <i class="fa-solid fa-paper-plane me-1"></i>Send
                         </button>
                     </div>
@@ -458,7 +458,7 @@
                 <nav class="d-flex d-none justify-content-center mt-1 mb-0" id="pagination">
                     <ul class="pagination mb-0">
                         <li class="page-item disabled" id="previous">
-                            <button class="page-link rounded-start-4" onclick="pagination.previous(this)" offline-disabled>
+                            <button class="page-link rounded-start-4" onclick="pagination.previous(this)" data-offline-disabled>
                                 <i class="fa-solid fa-circle-left me-1"></i>Prev
                             </button>
                         </li>
@@ -466,7 +466,7 @@
                             <span class="page-link text-light" id="page">1</span>
                         </li>
                         <li class="page-item" id="next">
-                            <button class="page-link rounded-end-4" onclick="pagination.next(this)" offline-disabled>
+                            <button class="page-link rounded-end-4" onclick="pagination.next(this)" data-offline-disabled>
                                 Next<i class="fa-solid fa-circle-right ms-1"></i>
                             </button>
                         </li>
@@ -525,7 +525,7 @@
     </button>
 
     <!-- Audio Button -->
-    <button type="button" id="button-music" style="bottom: 9vh;" class="btn bg-dark border btn-sm rounded-circle btn-float position-fixed" data-url="./assets/music/sound.mp3" offline-disabled>
+    <button type="button" id="button-music" style="bottom: 9vh;" class="btn bg-dark border btn-sm rounded-circle btn-float position-fixed" data-url="./assets/music/sound.mp3" data-offline-disabled>
         <i class="fa-solid fa-circle-pause spin-button"></i>
     </button>
 
