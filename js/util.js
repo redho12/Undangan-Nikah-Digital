@@ -29,11 +29,15 @@ export const util = (() => {
         clear = setTimeout(c, timeout);
     };
 
+    /**
+     * @param {HTMLElement} button
+     * @param {string} [message='Loading..']
+     * @returns {object}
+     */
     const disableButton = (button, message = 'Loading..') => {
-
         button.disabled = true;
         const tmp = button.innerHTML;
-        button.innerHTML = `<div class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></div>${message}`;
+        button.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></span>${message}`;
 
         return {
             restore: () => {
@@ -43,12 +47,16 @@ export const util = (() => {
         };
     };
 
+    /**
+     * @param {HTMLElement} checkbox
+     * @returns {object}
+     */
     const addLoadingCheckbox = (checkbox) => {
         checkbox.disabled = true;
 
         const label = document.querySelector(`label[for="${checkbox.id}"]`);
         const tmp = label.innerHTML;
-        label.innerHTML = `<div class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></div>${tmp}`;
+        label.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></span>${tmp}`;
 
         return {
             restore: () => {
@@ -66,10 +74,16 @@ export const util = (() => {
      */
     const animate = (svg, timeout, classes) => timeOut(() => svg.classList.add(classes), timeout);
 
+    /**
+     * @param {HTMLElement} button
+     * @param {string} [message=null]
+     * @param {number} [timeout=1500]
+     * @returns {Promise<void>}
+     */
     const copy = async (button, message = null, timeout = 1500) => {
-        const copy = button.getAttribute('data-copy');
+        const data = button.getAttribute('data-copy');
 
-        if (!copy || copy.length == 0) {
+        if (!data || data.length == 0) {
             alert('Nothing to copy');
             return;
         }
@@ -77,7 +91,7 @@ export const util = (() => {
         button.disabled = true;
 
         try {
-            await navigator.clipboard.writeText(copy);
+            await navigator.clipboard.writeText(data);
         } catch {
             button.disabled = false;
             alert('Failed to copy');
