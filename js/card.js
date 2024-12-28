@@ -157,7 +157,7 @@ export const card = (() => {
     const renderContent = (comment, is_parent) => {
         return `
         <div ${renderHeader(comment, is_parent)} id="${comment.uuid}" style="overflow-wrap: break-word !important;">
-            <div id="body-content-${comment.uuid}" data-tapTime="0" data-liked="false" ontouchend="like.tapTap(this)">
+            <div id="body-content-${comment.uuid}" data-tapTime="0" data-liked="false" role="button" tabindex="0">
             ${renderBody(comment, is_parent)}
             </div>
             ${renderTracker(comment)}

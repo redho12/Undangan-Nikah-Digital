@@ -358,6 +358,7 @@ export const comment = (() => {
                 showHide.set('hidden', traverse(res.data, showHide.get('hidden')));
                 comments.innerHTML = res.data.map((c) => card.renderContent(c)).join('');
                 res.data.forEach(fetchTracker);
+                res.data.forEach(addEventLike);
 
                 return res;
             });
@@ -403,6 +404,15 @@ export const comment = (() => {
         comment.innerHTML = isCollapsed ? original : original.slice(0, card.maxCommentLength) + '...';
         anchor.innerText = isCollapsed ? 'Sebagian' : 'Selengkapnya';
         anchor.setAttribute('data-show', isCollapsed ? 'true' : 'false');
+    };
+
+    const addEventLike = (comment) => {
+        if (comment.comments) {
+            comment.comments.forEach(addEventLike);
+        }
+
+        const bodyLike = document.getElementById(`body-content-${comment.uuid}`);
+        bodyLike.addEventListener('touchend', () => like.tapTap(bodyLike));
     };
 
     const fetchTracker = (comment) => {
