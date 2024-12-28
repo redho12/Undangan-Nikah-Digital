@@ -20,8 +20,8 @@ export const like = (() => {
     const like = async (button) => {
         const id = button.getAttribute('data-uuid');
 
-        const heart = button.firstElementChild.lastElementChild;
-        const info = button.firstElementChild.firstElementChild;
+        const info = button.firstElementChild;
+        const heart = button.lastElementChild;
 
         button.disabled = true;
 
