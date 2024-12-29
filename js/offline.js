@@ -80,6 +80,7 @@ export const offline = (() => {
             }
 
             isOnline() ? e.removeAttribute('disabled') : e.setAttribute('disabled', 'true');
+            e.setAttribute('data-offline-disabled', isOnline() ? 'false' : 'true');
         });
     };
 
