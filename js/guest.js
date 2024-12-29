@@ -12,6 +12,32 @@ import { bootstrap } from './bootstrap.js';
 export const guest = (() => {
 
     /**
+     * @type {ReturnType<typeof storage>|null}
+     */
+    let information = null;
+
+    /**
+     * @returns {void}
+     */
+    const countDownDate = () => {
+        const until = document.getElementById('count-down')?.getAttribute('data-time')?.replace(' ', 'T');
+        if (!until) {
+            return;
+        }
+
+        const count = (new Date(until)).getTime();
+
+        setInterval(() => {
+            const distance = Math.abs(count - Date.now());
+
+            document.getElementById('day').innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById('hour').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('minute').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('second').innerText = Math.floor((distance % (1000 * 60)) / 1000);
+        }, 1000);
+    };
+
+    /**
      * @param {string} id
      * @param {number} speed
      * @returns {void}
@@ -37,28 +63,8 @@ export const guest = (() => {
     };
 
     /**
-     * @type {ReturnType<typeof storage>|null}
+     * @returns {void}
      */
-    let information = null;
-
-    const countDownDate = () => {
-        const until = document.getElementById('count-down')?.getAttribute('data-time')?.replace(' ', 'T');
-        if (!until) {
-            return;
-        }
-
-        const count = (new Date(until)).getTime();
-
-        setInterval(() => {
-            const distance = Math.abs(count - Date.now());
-
-            document.getElementById('day').innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById('hour').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('minute').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('second').innerText = Math.floor((distance % (1000 * 60)) / 1000);
-        }, 1000);
-    };
-
     const animation = () => {
         const duration = 15 * 1000;
         const animationEnd = Date.now() + duration;
@@ -100,6 +106,9 @@ export const guest = (() => {
         })();
     };
 
+    /**
+     * @returns {void}
+     */
     const name = () => {
         const raw = window.location.search.split('to=');
         let name = null;
@@ -127,6 +136,10 @@ export const guest = (() => {
         opacity('loading', 0.025);
     };
 
+    /**
+     * @param {HTMLButtonElement} button
+     * @returns {void}
+     */
     const open = (button) => {
         button.disabled = true;
         document.body.scrollIntoView({ behavior: 'instant' });
@@ -162,11 +175,15 @@ export const guest = (() => {
      */
     const closeInformation = () => information.set('info', true);
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
         audio.init();
         theme.init();
         session.init();
         offline.init();
+
         countDownDate();
         information = storage('information');
 
@@ -198,7 +215,6 @@ export const guest = (() => {
 
         progress.add();
         progress.add();
-        comment.init();
         progress.init();
 
         session.guest()
@@ -209,6 +225,8 @@ export const guest = (() => {
                 }
 
                 progress.complete('request');
+
+                comment.init();
                 comment.comment()
                     .then(() => progress.complete('comment'))
                     .catch(() => progress.invalid('comment'));
