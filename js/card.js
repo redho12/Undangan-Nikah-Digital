@@ -58,7 +58,7 @@ export const card = (() => {
 
     const renderLike = (comment) => {
         return `
-        <button style="font-size: 0.8rem;" onclick="like.like(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${theme.isDarkMode('light', 'dark')} ms-auto rounded-3 p-0 d-flex justify-content-start align-items-center" data-offline-disabled>
+        <button style="font-size: 0.8rem;" onclick="like.like(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${theme.isDarkMode('light', 'dark')} ms-auto rounded-3 p-0 shadow-sm d-flex justify-content-start align-items-center" data-offline-disabled>
             <span class="my-0 mx-1" data-count-like="${comment.like.love}">${comment.like.love}</span>
             <i class="me-1 ${likes.has(comment.uuid) ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'}"></i>
         </button>`;
@@ -70,17 +70,17 @@ export const card = (() => {
         let action = `<div class="d-flex flex-wrap justify-content-start align-items-center" data-button-action="${comment.uuid}">`;
 
         if (config.get('can_reply') == true || config.get('can_reply') === undefined) {
-            action += `<button style="font-size: 0.8rem;" onclick="comment.reply(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1" data-offline-disabled>Reply</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="comment.reply(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1 shadow-sm" data-offline-disabled>Reply</button>`;
         }
 
         if (owns.has(comment.uuid) && (config.get('can_edit') == true || config.get('can_edit') === undefined)) {
-            action += `<button style="font-size: 0.8rem;" onclick="comment.edit(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1" data-offline-disabled>Edit</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="comment.edit(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1 shadow-sm" data-offline-disabled>Edit</button>`;
         }
 
         if (session.isAdmin()) {
-            action += `<button style="font-size: 0.8rem;" onclick="comment.remove(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1" data-own="${comment.own}" data-offline-disabled>Delete</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="comment.remove(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1 shadow-sm" data-own="${comment.own}" data-offline-disabled>Delete</button>`;
         } else if (owns.has(comment.uuid) && (config.get('can_delete') == true || config.get('can_delete') === undefined)) {
-            action += `<button style="font-size: 0.8rem;" onclick="comment.remove(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1" data-offline-disabled>Delete</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="comment.remove(this)" data-uuid="${comment.uuid}" class="btn btn-sm btn-outline-${btn} rounded-4 py-0 me-1 shadow-sm" data-offline-disabled>Delete</button>`;
         }
 
         action += '</div>';
