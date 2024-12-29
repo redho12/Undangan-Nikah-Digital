@@ -34,7 +34,7 @@ export const util = (() => {
      * @param {string} [message='Loading..']
      * @returns {object}
      */
-    const disableButton = (button, message = 'Loading..') => {
+    const disableButton = (button, message = 'Loading') => {
         button.disabled = true;
         const tmp = button.innerHTML;
         button.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></span>${message}`;

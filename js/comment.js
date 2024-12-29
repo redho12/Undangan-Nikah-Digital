@@ -29,7 +29,7 @@ export const comment = (() => {
         }
 
         changeButton(id, true);
-        const btn = util.disableButton(button, 'Loading');
+        const btn = util.disableButton(button);
         const like = document.querySelector(`[onclick="like.like(this)"][data-uuid="${id}"]`);
         like.disabled = true;
 
@@ -304,7 +304,7 @@ export const comment = (() => {
         }
 
         changeButton(id, true);
-        const btn = util.disableButton(button, 'Loading');
+        const btn = util.disableButton(button);
 
         await request(HTTP_GET, '/api/comment/' + id)
             .token(session.getToken())
