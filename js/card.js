@@ -149,7 +149,7 @@ export const card = (() => {
         </div>
         <hr class="text-${text} my-1">
         <p class="text-${text} my-1 mx-0 p-0" style="white-space: pre-wrap !important; font-size: 0.95rem;" ${moreThanMaxLength ? `data-comment="${util.base64Encode(original)}"` : ''} id="content-${comment.uuid}">${moreThanMaxLength ? (original.slice(0, maxCommentLength) + '...') : original}</p>
-        ${moreThanMaxLength ? `<p class="mb-2 mt-0 mx-0 p-0"><a class="text-${text}" role="button" style="font-size: 0.85rem;" data-show="false" onclick="comment.showMore(this, '${comment.uuid}')">Selengkapnya</a></p>` : ''}`;
+        ${moreThanMaxLength ? `<p class="mb-2 mt-0 mx-0 p-0"><a class="text-${text}" role="button" style="font-size: 0.85rem; display: block;" data-show="false" onclick="comment.showMore(this, '${comment.uuid}')">Selengkapnya</a></p>` : ''}`;
     };
 
     const renderContent = (comment, is_parent) => {

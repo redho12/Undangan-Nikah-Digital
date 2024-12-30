@@ -118,9 +118,18 @@ export const comment = (() => {
         const original = card.convertMarkdownToHTML(util.escapeHtml(form.value));
         const content = document.getElementById(`content-${id}`);
 
-        content.innerHTML = show && show.getAttribute('data-show') == 'false' ? original.slice(0, card.maxCommentLength) + '...' : original;
         if (original.length > card.maxCommentLength) {
+            content.innerHTML = show?.getAttribute('data-show') === 'false' ? original.slice(0, card.maxCommentLength) + '...' : original;
             content.setAttribute('data-comment', util.base64Encode(original));
+            if (show?.style.display === 'none') {
+                show.style.display = 'block';
+            }
+        } else {
+            content.innerHTML = original;
+            content.removeAttribute('data-comment');
+            if (show?.style.display === 'block') {
+                show.style.display = 'none';
+            }
         }
 
         if (presence) {
