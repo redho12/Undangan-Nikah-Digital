@@ -31,11 +31,12 @@ export const util = (() => {
 
     /**
      * @param {HTMLElement} button
-     * @param {string} [message='Loading..']
+     * @param {string} [message='Loading']
      * @returns {object}
      */
     const disableButton = (button, message = 'Loading') => {
         button.disabled = true;
+
         const tmp = button.innerHTML;
         button.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></span>${message}`;
 
@@ -51,7 +52,7 @@ export const util = (() => {
      * @param {HTMLElement} checkbox
      * @returns {object}
      */
-    const addLoadingCheckbox = (checkbox) => {
+    const disableCheckbox = (checkbox) => {
         checkbox.disabled = true;
 
         const label = document.querySelector(`label[for="${checkbox.id}"]`);
@@ -65,14 +66,6 @@ export const util = (() => {
             },
         };
     };
-
-    /**
-     * @param {HTMLElement} svg
-     * @param {number} timeout
-     * @param {string} classes
-     * @returns {void}
-     */
-    const animate = (svg, timeout, classes) => timeOut(() => svg.classList.add(classes), timeout);
 
     /**
      * @param {HTMLElement} button
@@ -128,14 +121,12 @@ export const util = (() => {
     };
 
     return {
-        open,
         copy,
         timeOut,
-        animate,
         escapeHtml,
         base64Encode,
         base64Decode,
         disableButton,
-        addLoadingCheckbox,
+        disableCheckbox,
     };
 })();

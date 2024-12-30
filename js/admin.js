@@ -41,7 +41,7 @@ export const admin = (() => {
     };
 
     const changeFilterBadWord = async (checkbox) => {
-        const label = util.addLoadingCheckbox(checkbox);
+        const label = util.disableCheckbox(checkbox);
 
         await request(HTTP_PATCH, '/api/user').
             token(session.getToken()).
@@ -54,7 +54,7 @@ export const admin = (() => {
     };
 
     const replyComment = async (checkbox) => {
-        const label = util.addLoadingCheckbox(checkbox);
+        const label = util.disableCheckbox(checkbox);
 
         await request(HTTP_PATCH, '/api/user').
             token(session.getToken()).
@@ -67,7 +67,7 @@ export const admin = (() => {
     };
 
     const editComment = async (checkbox) => {
-        const label = util.addLoadingCheckbox(checkbox);
+        const label = util.disableCheckbox(checkbox);
 
         await request(HTTP_PATCH, '/api/user').
             token(session.getToken()).
@@ -80,7 +80,7 @@ export const admin = (() => {
     };
 
     const deleteComment = async (checkbox) => {
-        const label = util.addLoadingCheckbox(checkbox);
+        const label = util.disableCheckbox(checkbox);
 
         await request(HTTP_PATCH, '/api/user').
             token(session.getToken()).

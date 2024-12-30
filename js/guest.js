@@ -176,6 +176,14 @@ export const guest = (() => {
     const closeInformation = () => information.set('info', true);
 
     /**
+     * @param {HTMLElement} svg
+     * @param {number} timeout
+     * @param {string} classes
+     * @returns {void}
+     */
+    const animate = (svg, timeout, classes) => util.timeOut(() => svg.classList.add(classes), timeout);
+
+    /**
      * @returns {void}
      */
     const init = () => {
@@ -239,6 +247,7 @@ export const guest = (() => {
         open,
         name,
         modal,
+        animate,
         closeInformation,
     };
 })();
