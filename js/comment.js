@@ -30,7 +30,7 @@ export const comment = (() => {
 
         changeButton(id, true);
         const btn = util.disableButton(button);
-        const like = document.querySelector(`[onclick="like.like(this)"][data-uuid="${id}"]`);
+        const like = document.querySelector(`[onclick="comment.like.like(this)"][data-uuid="${id}"]`);
         like.disabled = true;
 
         const status = await request(HTTP_DELETE, '/api/comment/' + owns.get(id))
@@ -269,7 +269,7 @@ export const comment = (() => {
                 anchorTag.remove();
             }
 
-            containerDiv.querySelector(`button[onclick="like.like(this)"][data-uuid="${id}"]`).insertAdjacentHTML('beforebegin', card.renderReadMore(id, anchorTag ? anchorTag.getAttribute('data-uuids').split(',').concat(uuids) : uuids));
+            containerDiv.querySelector(`button[onclick="comment.like.like(this)"][data-uuid="${id}"]`).insertAdjacentHTML('beforebegin', card.renderReadMore(id, anchorTag ? anchorTag.getAttribute('data-uuids').split(',').concat(uuids) : uuids));
         }
     };
 
@@ -476,6 +476,8 @@ export const comment = (() => {
     };
 
     return {
+        like,
+        pagination,
         init,
         scroll,
         cancel,

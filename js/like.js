@@ -129,7 +129,7 @@ export const like = (() => {
             }
             animation(div);
             div.setAttribute('data-liked', 'true');
-            await like(document.querySelector(`[onclick="like.like(this)"][data-uuid="${uuid}"]`));
+            await like(document.querySelector(`[onclick="comment.like.like(this)"][data-uuid="${uuid}"]`));
             div.setAttribute('data-liked', 'false');
         }
 
