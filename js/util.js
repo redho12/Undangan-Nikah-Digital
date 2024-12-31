@@ -107,7 +107,7 @@ export const util = (() => {
     const base64Encode = (str) => {
         const encoder = new TextEncoder();
         const encodedBytes = encoder.encode(str);
-        return btoa(String.fromCharCode(...encodedBytes));
+        return window.btoa(String.fromCharCode(...encodedBytes));
     };
 
     /**
