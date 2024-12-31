@@ -214,9 +214,8 @@ export const guest = (() => {
             storage('tracker').clear();
         }
 
-        const presence = information.get('presence');
-        if (presence !== undefined) {
-            document.getElementById('form-presence').value = presence ? '1' : '2';
+        if (information.has('presence')) {
+            document.getElementById('form-presence').value = information.get('presence') ? '1' : '2';
         }
 
         const info = document.getElementById('information');
@@ -224,32 +223,34 @@ export const guest = (() => {
             info.remove();
         }
 
-        if (document.body.getAttribute('data-key')?.length === 0) {
+        const token = document.body.getAttribute('data-key');
+        if (!token || token.length === 0) {
+            progress.init();
             document.getElementById('comment')?.remove();
             document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
-            progress.init();
-            return;
         }
 
-        progress.add();
-        progress.add();
-        progress.init();
+        if (token.length > 0) {
+            // add 2 progress for config and comment.
+            progress.add();
+            progress.add();
+            progress.init();
 
-        session.guest()
-            .then((res) => {
+            session.setToken(token);
+            session.guest().then((res) => {
                 if (res.code !== 200) {
-                    progress.invalid('request');
-                    return res;
+                    progress.invalid('config');
+                    return;
                 }
 
-                progress.complete('request');
+                progress.complete('config');
 
                 comment.init();
                 comment.comment()
                     .then(() => progress.complete('comment'))
                     .catch(() => progress.invalid('comment'));
-            })
-            .catch(() => progress.invalid('request'));
+            }).catch(() => progress.invalid('config'));
+        }
     };
 
     return {

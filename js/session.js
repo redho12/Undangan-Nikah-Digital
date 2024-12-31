@@ -54,8 +54,6 @@ export const session = (() => {
      * @returns {Promise<ReturnType<typeof dto.baseResponse<object>>}
      */
     const guest = () => {
-        const config = storage('config');
-
         return request(HTTP_GET, '/api/config')
             .token(document.body.getAttribute('data-key'))
             .send()
@@ -64,11 +62,11 @@ export const session = (() => {
                     return res;
                 }
 
-                for (let [key, value] of Object.entries(res.data)) {
-                    config.set(key, value);
+                const config = storage('config');
+                for (let [k, v] of Object.entries(res.data)) {
+                    config.set(k, v);
                 }
 
-                setToken(document.body.getAttribute('data-key'));
                 return res;
             });
     };
