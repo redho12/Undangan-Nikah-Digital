@@ -22,11 +22,9 @@ export const progress = (() => {
     };
 
     const add = () => {
-        if (!push) {
-            return;
+        if (push) {
+            total += 1;
         }
-
-        total += 1;
     };
 
     const complete = (type) => {

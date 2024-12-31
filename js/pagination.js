@@ -27,9 +27,9 @@ export const pagination = (() => {
     const enableNext = () => liNext.classList.contains('disabled') ? liNext.classList.remove('disabled') : null;
 
     const enablePagination = () => {
-        const pagination = document.getElementById('pagination');
-        if (pagination.classList.contains('d-none')) {
-            pagination.classList.remove('d-none');
+        const paginate = document.getElementById('pagination');
+        if (paginate.classList.contains('d-none')) {
+            paginate.classList.remove('d-none');
         }
     };
 
