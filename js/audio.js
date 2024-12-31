@@ -52,6 +52,5 @@ export const audio = (() => {
     return {
         init,
         play,
-        pause,
     };
 })();
