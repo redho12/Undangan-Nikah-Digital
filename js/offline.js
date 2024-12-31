@@ -73,6 +73,7 @@ export const offline = (() => {
     const changeState = () => {
         document.querySelectorAll('button[data-offline-disabled], input[data-offline-disabled], select[data-offline-disabled], textarea[data-offline-disabled]').forEach((e) => {
             e.dispatchEvent(new Event(isOnline() ? 'online' : 'offline'));
+            e.setAttribute('data-offline-disabled', isOnline() ? 'false' : 'true');
 
             if (e.tagName === 'BUTTON') {
                 isOnline() ? e.classList.remove('disabled') : e.classList.add('disabled');
@@ -80,7 +81,6 @@ export const offline = (() => {
             }
 
             isOnline() ? e.removeAttribute('disabled') : e.setAttribute('disabled', 'true');
-            e.setAttribute('data-offline-disabled', isOnline() ? 'false' : 'true');
         });
     };
 
