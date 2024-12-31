@@ -15,7 +15,11 @@ export const comment = (() => {
     let tracker = null;
     let showHide = null;
 
-    const changeButton = (id, disabled) => document.querySelector(`[data-button-action="${id}"]`).childNodes.forEach((e) => e.disabled = disabled);
+    const changeButton = (id, disabled) => {
+        document.querySelector(`[data-button-action="${id}"]`).childNodes.forEach((e) => {
+            e.disabled = disabled;
+        });
+    };
 
     const remove = async (button) => {
         if (!confirm('Are you sure?')) {
