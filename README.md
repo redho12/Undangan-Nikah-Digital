@@ -17,20 +17,20 @@ Kamu dapat mencoba undangan ini melalui link berikut.
 - Sesuaikan index.html sesuai kebutuhan.
 - Ubah `data-url` pada body index dan dashboard sesuai domain backend (jika deploy sendiri).
 - Ubah juga `data-key` pada body index sesuai dengan access key pada dashboard.
-- Deployment api bisa lihat dibawah ini atau coba gratis api selama 1 hari pada trial api.
+- Deployment backend bisa lihat dibawah ini atau coba gratis selama 1 hari pada trial api.
 
 Jika kamu punya pertanyaan, silakan gunakan fitur `discussions` agar teman-teman yang lain juga dapat mengetahuinya. Terima kasih. 
 
 ## Deployment API
 
-- Presentation
-    [https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
-
 - Video\
     otw
 
+- Presentation
+    [https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
+
 ## Trial API
-Untuk kamu yang ingin mencoba API secara gratis sebelum melakukan deploy, silakan kunjungi link berikut.
+Untuk kamu yang ingin mencoba secara gratis, silakan kunjungi link berikut.
 
 [https://payment.ulems.my.id](https://payment.ulems.my.id)
 
