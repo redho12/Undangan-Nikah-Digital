@@ -186,12 +186,22 @@ export const guest = (() => {
     /**
      * @returns {void}
      */
+    const normalize = () => {
+        document.querySelectorAll('.font-arabic').forEach((el) => {
+            el.innerHTML = String(el.innerHTML).normalize('NFC');
+        });
+    };
+
+    /**
+     * @returns {void}
+     */
     const init = () => {
         audio.init();
         theme.init();
         session.init();
         offline.init();
 
+        normalize();
         countDownDate();
         information = storage('information');
 
