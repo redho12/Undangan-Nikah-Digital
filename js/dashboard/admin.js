@@ -1,23 +1,30 @@
-import { dto } from './dto.js';
-import { util } from './util.js';
-import { theme } from './theme.js';
+import { dto } from '../dto.js';
+import { auth } from './auth.js';
+import { util } from '../util.js';
+import { theme } from '../theme.js';
 import { navbar } from './navbar.js';
-import { storage } from './storage.js';
-import { session } from './session.js';
-import { comment } from './comment.js';
-import { offline } from './offline.js';
-import { bootstrap } from './bootstrap.js';
-import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from './request.js';
+import { storage } from '../storage.js';
+import { session } from '../session.js';
+import { comment } from '../comment.js';
+import { offline } from '../offline.js';
+import { bootstrap } from '../bootstrap.js';
+import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../request.js';
 
 export const admin = (() => {
 
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
     let user = null;
 
-    const getUserDetail = () => {
-        request(HTTP_GET, '/api/user').token(session.getToken()).send().then((res) => {
+    /**
+     * @returns {Promise<void>}
+     */
+    const getAllRequest = async () => {
+        await request(HTTP_GET, '/api/user').token(session.getToken()).send().then((res) => {
 
-            for (let [key, value] of Object.entries(res.data)) {
-                user.set(key, value);
+            for (let [k, v] of Object.entries(res.data)) {
+                user.set(k, v);
             }
 
             document.getElementById('dashboard-name').innerHTML = `${util.escapeHtml(res.data.name)}<i class="fa-solid fa-hands text-warning ms-2"></i>`;
@@ -33,13 +40,19 @@ export const admin = (() => {
         });
 
         request(HTTP_GET, '/api/stats').token(session.getToken()).send().then((res) => {
-            document.getElementById('count-comment').innerHTML = res.data.comments.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            document.getElementById('count-like').innerHTML = res.data.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            document.getElementById('count-present').innerHTML = res.data.present.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            document.getElementById('count-absent').innerHTML = res.data.absent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            document.getElementById('count-comment').innerHTML = String(res.data.comments).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            document.getElementById('count-like').innerHTML = String(res.data.likes).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            document.getElementById('count-present').innerHTML = String(res.data.present).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            document.getElementById('count-absent').innerHTML = String(res.data.absent).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         });
+
+        comment.comment();
     };
 
+    /**
+     * @param {HTMLElement} checkbox
+     * @returns {Promise<void>}
+     */
     const changeFilterBadWord = async (checkbox) => {
         const label = util.disableCheckbox(checkbox);
 
@@ -53,6 +66,10 @@ export const admin = (() => {
         label.restore();
     };
 
+    /**
+     * @param {HTMLElement} checkbox
+     * @returns {Promise<void>}
+     */
     const replyComment = async (checkbox) => {
         const label = util.disableCheckbox(checkbox);
 
@@ -66,6 +83,10 @@ export const admin = (() => {
         label.restore();
     };
 
+    /**
+     * @param {HTMLElement} checkbox
+     * @returns {Promise<void>}
+     */
     const editComment = async (checkbox) => {
         const label = util.disableCheckbox(checkbox);
 
@@ -79,6 +100,10 @@ export const admin = (() => {
         label.restore();
     };
 
+    /**
+     * @param {HTMLElement} checkbox
+     * @returns {Promise<void>}
+     */
     const deleteComment = async (checkbox) => {
         const label = util.disableCheckbox(checkbox);
 
@@ -92,6 +117,10 @@ export const admin = (() => {
         label.restore();
     };
 
+    /**
+     * @param {HTMLButtonElement} button
+     * @returns {Promise<void>}
+     */
     const regenerate = async (button) => {
         if (!confirm('Are you sure?')) {
             return;
@@ -104,13 +133,17 @@ export const admin = (() => {
             send(dto.statusResponse).
             then((res) => {
                 if (res.data.status) {
-                    getUserDetail();
+                    getAllRequest();
                 }
             });
 
         btn.restore();
     };
 
+    /**
+     * @param {HTMLButtonElement} button
+     * @returns {Promise<void>}
+     */
     const changePassword = async (button) => {
         const old = document.getElementById('old_password');
         const newest = document.getElementById('new_password');
@@ -147,6 +180,10 @@ export const admin = (() => {
         }
     };
 
+    /**
+     * @param {HTMLButtonElement} button
+     * @returns {Promise<void>}
+     */
     const changeName = async (button) => {
         const name = document.getElementById('form-name');
 
@@ -156,7 +193,6 @@ export const admin = (() => {
         }
 
         name.disabled = true;
-
         const btn = util.disableButton(button);
 
         const result = await request(HTTP_PATCH, '/api/user').
@@ -168,16 +204,19 @@ export const admin = (() => {
             then((res) => res.data.status, () => false);
 
         name.disabled = false;
-
         btn.restore();
 
         if (result) {
-            getUserDetail();
+            getAllRequest();
             button.disabled = true;
             alert('Success change name');
         }
     };
 
+    /**
+     * @param {HTMLButtonElement} button
+     * @returns {Promise<void>}
+     */
     const download = async (button) => {
         const btn = util.disableButton(button);
 
@@ -186,6 +225,9 @@ export const admin = (() => {
         btn.restore();
     };
 
+    /**
+     * @returns {void}
+     */
     const enableButtonName = () => {
         const btn = document.getElementById('button-change-name');
         if (btn.disabled) {
@@ -193,6 +235,9 @@ export const admin = (() => {
         }
     };
 
+    /**
+     * @returns {void}
+     */
     const enableButtonPassword = () => {
         const btn = document.getElementById('button-change-password');
         const old = document.getElementById('old_password');
@@ -202,44 +247,33 @@ export const admin = (() => {
         }
     };
 
-    const login = async (button) => {
-        const btn = util.disableButton(button);
-
-        const formEmail = document.getElementById('loginEmail');
-        const formPassword = document.getElementById('loginPassword');
-
-        formEmail.disabled = true;
-        formPassword.disabled = true;
-
-        const res = await session.login(dto.postSessionRequest(formEmail.value, formPassword.value));
-        if (res) {
-            getUserDetail();
-            comment.comment();
-            bootstrap.Modal.getOrCreateInstance('#loginModal').hide();
-            formEmail.value = null;
-            formPassword.value = null;
-        }
-
-        btn.restore();
-        formEmail.disabled = false;
-        formPassword.disabled = false;
+    /**
+     * @returns {void}
+     */
+    const clearSession = () => {
+        user.clear();
+        session.logout();
+        bootstrap.Modal.getOrCreateInstance('#mainModal').show();
     };
 
+    /**
+     * @returns {void}
+     */
     const logout = () => {
         if (!confirm('Are you sure?')) {
             return;
         }
 
-        user.clear();
-        session.logout();
-        bootstrap.Modal.getOrCreateInstance('#loginModal').show();
+        clearSession();
     };
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
         theme.init();
         session.init();
         offline.init();
-        user = storage('user');
 
         if (!session.isAdmin()) {
             storage('owns').clear();
@@ -253,35 +287,35 @@ export const admin = (() => {
         theme.spyTop();
         comment.init();
 
+        user = storage('user');
+        document.getElementById('mainModal').addEventListener('hidden.bs.modal', getAllRequest);
+
         try {
             const exp = session.decode()?.exp;
             if (!exp || exp < (Date.now() / 1000)) {
                 throw new Error('Invalid token');
             }
 
-            getUserDetail();
-            comment.comment();
+            getAllRequest();
         } catch {
-            bootstrap.Modal.getOrCreateInstance('#loginModal').show();
-            session.logout();
-            user.clear();
+            clearSession();
         }
     };
 
     return {
+        auth,
+        navbar,
         init,
-        login,
         logout,
-        changeFilterBadWord,
-        replyComment,
-        editComment,
-        deleteComment,
-        regenerate,
-        changePassword,
         download,
+        regenerate,
+        editComment,
+        replyComment,
+        deleteComment,
         changeName,
+        changePassword,
+        changeFilterBadWord,
         enableButtonName,
         enableButtonPassword,
-        navbar,
     };
 })();

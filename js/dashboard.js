@@ -1,5 +1,5 @@
 import { util } from './util.js';
-import { admin } from './admin.js';
+import { admin } from './dashboard/admin.js';
 import { theme } from './theme.js';
 import { comment } from './comment.js';
 
