@@ -7,25 +7,15 @@ import { storage } from '../storage.js';
 import { session } from '../session.js';
 import { comment } from '../comment.js';
 import { offline } from '../offline.js';
-import { bootstrap } from '../bootstrap.js';
 import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../request.js';
 
 export const admin = (() => {
 
     /**
-     * @type {ReturnType<typeof storage>|null}
-     */
-    let user = null;
-
-    /**
      * @returns {Promise<void>}
      */
     const getAllRequest = async () => {
-        await request(HTTP_GET, '/api/user').token(session.getToken()).send().then((res) => {
-
-            for (let [k, v] of Object.entries(res.data)) {
-                user.set(k, v);
-            }
+        await auth.getDetailUser().then((res) => {
 
             document.getElementById('dashboard-name').innerHTML = `${util.escapeHtml(res.data.name)}<i class="fa-solid fa-hands text-warning ms-2"></i>`;
             document.getElementById('dashboard-email').innerHTML = res.data.email;
@@ -250,27 +240,19 @@ export const admin = (() => {
     /**
      * @returns {void}
      */
-    const clearSession = () => {
-        user.clear();
-        session.logout();
-        bootstrap.Modal.getOrCreateInstance('#mainModal').show();
-    };
-
-    /**
-     * @returns {void}
-     */
     const logout = () => {
         if (!confirm('Are you sure?')) {
             return;
         }
 
-        clearSession();
+        auth.clearSession();
     };
 
     /**
      * @returns {void}
      */
     const init = () => {
+        auth.init();
         theme.init();
         session.init();
         offline.init();
@@ -287,7 +269,6 @@ export const admin = (() => {
         theme.spyTop();
         comment.init();
 
-        user = storage('user');
         document.getElementById('mainModal').addEventListener('hidden.bs.modal', getAllRequest);
 
         try {
@@ -298,7 +279,7 @@ export const admin = (() => {
 
             getAllRequest();
         } catch {
-            clearSession();
+            auth.clearSession();
         }
     };
 

@@ -1,9 +1,16 @@
 import { dto } from '../dto.js';
 import { util } from '../util.js';
+import { storage } from '../storage.js';
 import { session } from '../session.js';
 import { bootstrap } from '../bootstrap.js';
+import { request, HTTP_GET } from '../request.js';
 
 export const auth = (() => {
+
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
+    let user = null;
 
     /**
      * @param {HTMLButtonElement} button
@@ -30,7 +37,51 @@ export const auth = (() => {
         formPassword.disabled = false;
     };
 
+    /**
+     * @returns {Promise<ReturnType<typeof dto.baseResponse>>}
+     */
+    const getDetailUser = () => {
+        return request(HTTP_GET, '/api/user').token(session.getToken()).send().then((res) => {
+            if (res.code !== 200) {
+                return res;
+            }
+
+            for (let [k, v] of Object.entries(res.data)) {
+                user.set(k, v);
+            }
+
+            return res;
+        }, clearSession);
+    };
+
+    /**
+     * @returns {ReturnType<typeof storage>|null}
+     */
+    const getUserStorage = () => {
+        return user;
+    };
+
+    /**
+     * @returns {void}
+     */
+    const clearSession = () => {
+        user.clear();
+        session.logout();
+        bootstrap.Modal.getOrCreateInstance('#mainModal').show();
+    };
+
+    /**
+     * @returns {void}
+     */
+    const init = () => {
+        user = storage('user');
+    };
+
     return {
+        init,
         login,
+        clearSession,
+        getDetailUser,
+        getUserStorage,
     };
 })();
