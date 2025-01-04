@@ -1,13 +1,13 @@
-import { dto } from '../dto.js';
 import { auth } from './auth.js';
 import { util } from '../util.js';
 import { theme } from '../theme.js';
+import { dto } from '../http/dto.js';
 import { navbar } from './navbar.js';
 import { storage } from '../storage.js';
 import { session } from '../session.js';
 import { comment } from '../comment.js';
 import { offline } from '../offline.js';
-import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../request.js';
+import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../http/request.js';
 
 export const admin = (() => {
 

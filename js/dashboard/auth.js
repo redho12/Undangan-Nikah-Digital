@@ -1,9 +1,9 @@
-import { dto } from '../dto.js';
 import { util } from '../util.js';
+import { dto } from '../http/dto.js';
 import { storage } from '../storage.js';
 import { session } from '../session.js';
 import { bootstrap } from '../bootstrap.js';
-import { request, HTTP_GET } from '../request.js';
+import { request, HTTP_GET } from '../http/request.js';
 
 export const auth = (() => {
 

@@ -1,6 +1,6 @@
-import { dto } from './dto.js';
+import { dto } from './http/dto.js';
 import { storage } from './storage.js';
-import { request, HTTP_POST, HTTP_GET } from './request.js';
+import { request, HTTP_POST, HTTP_GET } from './http/request.js';
 
 export const session = (() => {
 
