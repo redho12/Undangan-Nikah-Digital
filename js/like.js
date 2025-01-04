@@ -1,7 +1,7 @@
 import { dto } from './http/dto.js';
 import { storage } from './storage.js';
 import { session } from './session.js';
-import { confetti } from './confetti.js';
+import { confetti } from './libs/confetti.js';
 import { request, HTTP_PATCH, HTTP_POST } from './http/request.js';
 
 export const like = (() => {
