@@ -5,6 +5,7 @@
     <!-- Common -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dashboard Ulems">
     <title>Dashboard Ulems</title>
 
     <!-- Appearance -->
@@ -13,7 +14,6 @@
     <meta name="theme-color" content="#000000">
     <meta name="color-scheme" content="dark light">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="canonical" href="https://ulems.my.id/">
     <link rel="shortcut icon" type="image/x-icon" href="https://ulems.my.id/assets/favicon.ico">
     <link rel="apple-touch-icon" sizes="192x192" href="https://ulems.my.id/assets/images/icon-192x192.png">
     <link rel="icon" type="image/x-icon" href="https://ulems.my.id/assets/favicon.ico">
@@ -95,10 +95,10 @@
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <hr class="my-2">
+                            <hr class="my-2" aria-hidden="true">
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="btn-theme-dark logout nav-link w-100 text-start fw-semibold mt-1 rounded-4 shadow-sm" onclick="admin.logout()">
+                            <button class="btn-theme-dark logout nav-link w-100 text-start fw-semibold mt-1 rounded-4 shadow-sm" onclick="admin.logout()" type="button" role="tab" aria-selected="false">
                                 <i class="fa-solid fa-right-from-bracket ms-3 me-2"></i>Logout
                             </button>
                         </li>
@@ -116,12 +116,12 @@
                         <!-- Sub Header -->
                         <div class="rounded-4 p-2 mb-4 shadow" style="background-color: var(--bs-gray-200)">
                             <div class="d-flex justify-content-between">
-                                <h6 class="fw-semibold m-1" style="color: var(--bs-gray-900);"><i class="fa-solid fa-home mx-2"></i>Home</h6>
+                                <h5 class="fw-semibold m-1" style="color: var(--bs-gray-900);"><i class="fa-solid fa-home mx-2"></i>Home</h5>
                                 <div class="d-flex">
-                                    <button class="btn btn-success rounded-3 btn-sm shadow-sm my-0 ms-0 me-2 pb-0" onclick="admin.download(this)" data-offline-disabled="false">
+                                    <button class="btn btn-success rounded-3 btn-sm shadow-sm my-0 ms-0 me-2 pb-0" onclick="admin.download(this)" data-offline-disabled="false" aria-label="Download comment">
                                         <i class="fa-solid fa-download"></i><span class="d-none d-sm-inline ms-2">Download</span>
                                     </button>
-                                    <button class="btn btn-secondary rounded-3 btn-sm shadow-sm m-0 pb-0" onclick="theme.change()">
+                                    <button class="btn btn-secondary rounded-3 btn-sm shadow-sm m-0 pb-0" onclick="theme.change()" aria-label="Change theme">
                                         <i class="fa-solid fa-circle-half-stroke"></i><span class="d-none d-sm-inline ms-2">Theme</span>
                                     </button>
                                 </div>
@@ -258,7 +258,7 @@
 
                         <!-- Sub Header -->
                         <div class="rounded-4 p-2 mb-4 shadow" style="background-color: var(--bs-gray-200)">
-                            <h6 class="fw-semibold m-1" style="color: var(--bs-gray-900);"><i class="fa-solid fa-gear mx-2"></i>Setting</h6>
+                            <h5 class="fw-semibold m-1" style="color: var(--bs-gray-900);"><i class="fa-solid fa-gear mx-2"></i>Setting</h5>
                         </div>
 
                         <!-- Email -->
@@ -361,7 +361,7 @@
     <div class="fixed-top" id="offline-mode" style="opacity: 0; z-index: 1057; pointer-events: none;"></div>
 
     <!-- Modal login -->
-    <div class="modal fade" id="mainModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="mainModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-label="Modal Login" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4">
                 <div class="modal-body">
