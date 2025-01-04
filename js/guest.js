@@ -155,6 +155,7 @@ export const guest = (() => {
 
         opacity('welcome', 0.025);
 
+        audio.init();
         audio.play();
         theme.spyTop();
 
@@ -196,7 +197,6 @@ export const guest = (() => {
      * @returns {void}
      */
     const init = () => {
-        audio.init();
         theme.init();
         session.init();
         offline.init();
