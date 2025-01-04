@@ -1,13 +1,13 @@
-import { util } from './util.js';
+import { util } from '../util.js';
 import { audio } from './audio.js';
-import { theme } from './theme.js';
-import { session } from './session.js';
-import { storage } from './storage.js';
-import { comment } from './comment.js';
-import { offline } from './offline.js';
+import { theme } from '../theme.js';
+import { session } from '../session.js';
+import { storage } from '../storage.js';
+import { comment } from '../comment.js';
+import { offline } from '../offline.js';
 import { progress } from './progress.js';
-import { confetti } from './libs/confetti.js';
-import { bootstrap } from './libs/bootstrap.js';
+import { confetti } from '../libs/confetti.js';
+import { bootstrap } from '../libs/bootstrap.js';
 
 export const guest = (() => {
 
