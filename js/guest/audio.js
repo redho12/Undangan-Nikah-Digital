@@ -15,42 +15,51 @@ export const audio = (() => {
     const statePlay = '<i class="fa-solid fa-circle-pause spin-button"></i>';
     const statePause = '<i class="fa-solid fa-circle-play"></i>';
 
+    /**
+     * @returns {Promise<void>}
+     */
     const play = async () => {
         music.disabled = true;
         try {
             await audio.play();
             isPlay = true;
+            music.disabled = false;
             music.innerHTML = statePlay;
         } catch (err) {
             isPlay = false;
             alert(err);
         }
-        music.disabled = false;
     };
 
+    /**
+     * @returns {void}
+     */
     const pause = () => {
         isPlay = false;
         audio.pause();
         music.innerHTML = statePause;
     };
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
         music = document.getElementById('button-music');
 
         audio = new Audio(music.getAttribute('data-url'));
+        audio.volume = 1;
+        audio.loop = true;
+        audio.muted = false;
         audio.currentTime = 0;
         audio.autoplay = false;
-        audio.muted = false;
-        audio.loop = true;
-        audio.volume = 1;
         audio.controls = false;
 
+        play();
         music.addEventListener('offline', pause);
         music.addEventListener('click', () => isPlay ? pause() : play());
     };
 
     return {
         init,
-        play,
     };
 })();

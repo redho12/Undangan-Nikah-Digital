@@ -156,7 +156,6 @@ export const guest = (() => {
         opacity('welcome', 0.025);
 
         audio.init();
-        audio.play();
         theme.spyTop();
 
         util.timeOut(animation, 1500);
@@ -200,6 +199,7 @@ export const guest = (() => {
         theme.init();
         session.init();
         offline.init();
+        window.AOS.init();
 
         normalize();
         countDownDate();

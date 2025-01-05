@@ -17,36 +17,60 @@ export const progress = (() => {
     let valid = true;
     let push = true;
 
+    /**
+     * @returns {void}
+     */
     const onComplete = () => {
         guest.name();
     };
 
+    /**
+     * @returns {void}
+     */
     const add = () => {
         if (push) {
             total += 1;
         }
     };
 
+    /**
+     * @returns {string}
+     */
+    const showInformation = () => {
+        return `(${loaded}/${total}) [${parseInt((loaded / total) * 100).toFixed(0)}%]`;
+    };
+
+    /**
+     * @param {string} type
+     * @returns {void}
+     */
     const complete = (type) => {
         if (!valid) {
             return;
         }
 
         loaded += 1;
+        info.innerText = `Loading ${type} complete ${showInformation()}`;
         bar.style.width = Math.min((loaded / total) * 100, 100).toString() + '%';
-        info.innerText = `Loading ${type} complete (${loaded}/${total}) [${parseInt((loaded / total) * 100).toFixed(0)}%]`;
 
         if (loaded === total) {
             onComplete();
         }
     };
 
+    /**
+     * @param {string} type
+     * @returns {void}
+     */
     const invalid = (type) => {
-        info.innerText = `Error loading ${type} (${loaded}/${total}) [${parseInt((loaded / total) * 100).toFixed(0)}%]`;
-        bar.style.backgroundColor = 'red';
         valid = false;
+        bar.style.backgroundColor = 'red';
+        info.innerText = `Error loading ${type} ${showInformation()}`;
     };
 
+    /**
+     * @returns {Promise<void>}
+     */
     const run = async () => {
         document.querySelectorAll('img').forEach((asset) => {
             asset.onerror = () => {
@@ -64,13 +88,15 @@ export const progress = (() => {
         });
     };
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
-        document.querySelectorAll('img').forEach(add);
-
         info = document.getElementById('progress-info');
         bar = document.getElementById('progress-bar');
         info.style.display = 'block';
 
+        document.querySelectorAll('img').forEach(add);
         push = false;
         run();
     };

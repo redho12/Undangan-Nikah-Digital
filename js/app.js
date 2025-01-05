@@ -5,7 +5,6 @@ import { comment } from './comment/comment.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     guest.init();
-    window.AOS.init();
 
     window.util = util;
     window.guest = guest;
