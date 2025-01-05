@@ -1,7 +1,7 @@
 import { util } from './util.js';
-import { admin } from './dashboard/admin.js';
 import { theme } from './theme.js';
-import { comment } from './comment.js';
+import { admin } from './dashboard/admin.js';
+import { comment } from './comment/comment.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     admin.init();

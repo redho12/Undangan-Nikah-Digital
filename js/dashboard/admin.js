@@ -5,8 +5,8 @@ import { dto } from '../http/dto.js';
 import { navbar } from './navbar.js';
 import { storage } from '../storage.js';
 import { session } from '../session.js';
-import { comment } from '../comment.js';
 import { offline } from '../offline.js';
+import { comment } from '../comment/comment.js';
 import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../http/request.js';
 
 export const admin = (() => {

@@ -1,12 +1,12 @@
 import { card } from './card.js';
 import { like } from './like.js';
-import { util } from './util.js';
-import { theme } from './theme.js';
-import { dto } from './http/dto.js';
-import { session } from './session.js';
-import { storage } from './storage.js';
+import { util } from '../util.js';
+import { theme } from '../theme.js';
+import { dto } from '../http/dto.js';
+import { session } from '../session.js';
+import { storage } from '../storage.js';
 import { pagination } from './pagination.js';
-import { request, HTTP_GET, HTTP_POST, HTTP_DELETE, HTTP_PUT } from './http/request.js';
+import { request, HTTP_GET, HTTP_POST, HTTP_DELETE, HTTP_PUT } from '../http/request.js';
 
 export const comment = (() => {
 
