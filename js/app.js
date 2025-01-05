@@ -1,6 +1,6 @@
-import { util } from './util.js';
-import { theme } from './theme.js';
+import { util } from './common/util.js';
 import { guest } from './guest/guest.js';
+import { theme } from './common/theme.js';
 import { comment } from './comment/comment.js';
 
 document.addEventListener('DOMContentLoaded', () => {

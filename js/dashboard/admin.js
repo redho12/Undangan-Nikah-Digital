@@ -1,11 +1,11 @@
 import { auth } from './auth.js';
-import { util } from '../util.js';
-import { theme } from '../theme.js';
-import { dto } from '../http/dto.js';
 import { navbar } from './navbar.js';
-import { storage } from '../storage.js';
-import { session } from '../session.js';
-import { offline } from '../offline.js';
+import { dto } from '../http/dto.js';
+import { util } from '../common/util.js';
+import { theme } from '../common/theme.js';
+import { storage } from '../common/storage.js';
+import { session } from '../common/session.js';
+import { offline } from '../common/offline.js';
 import { comment } from '../comment/comment.js';
 import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../http/request.js';
 

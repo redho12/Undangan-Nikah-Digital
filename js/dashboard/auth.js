@@ -1,7 +1,7 @@
-import { util } from '../util.js';
 import { dto } from '../http/dto.js';
-import { storage } from '../storage.js';
-import { session } from '../session.js';
+import { util } from '../common/util.js';
+import { storage } from '../common/storage.js';
+import { session } from '../common/session.js';
 import { bootstrap } from '../libs/bootstrap.js';
 import { request, HTTP_GET } from '../http/request.js';
 

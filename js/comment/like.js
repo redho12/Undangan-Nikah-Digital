@@ -1,6 +1,6 @@
 import { dto } from '../http/dto.js';
-import { storage } from '../storage.js';
-import { session } from '../session.js';
+import { storage } from '../common/storage.js';
+import { session } from '../common/session.js';
 import { confetti } from '../libs/confetti.js';
 import { request, HTTP_PATCH, HTTP_POST } from '../http/request.js';
 
