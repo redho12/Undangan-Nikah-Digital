@@ -213,6 +213,10 @@ export const guest = (() => {
                     .catch(() => progress.invalid('comment'));
             }).catch(() => progress.invalid('config'));
         }
+
+        return {
+            util,
+        };
     };
 
     return {

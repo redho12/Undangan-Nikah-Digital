@@ -281,6 +281,10 @@ export const admin = (() => {
         } catch {
             auth.clearSession();
         }
+
+        return {
+            util,
+        };
     };
 
     return {
