@@ -5,9 +5,9 @@ import { theme } from '../common/theme.js';
 import { storage } from '../common/storage.js';
 import { session } from '../common/session.js';
 import { offline } from '../common/offline.js';
-import { confetti } from '../libs/confetti.js';
 import { comment } from '../comment/comment.js';
 import { bootstrap } from '../libs/bootstrap.js';
+import { confetti, openAnimation } from '../libs/confetti.js';
 
 export const guest = (() => {
 
@@ -65,67 +65,27 @@ export const guest = (() => {
     /**
      * @returns {void}
      */
-    const animation = () => {
-        const duration = 15 * 1000;
-        const animationEnd = Date.now() + duration;
-        const colors = ['#FFC0CB', '#FF1493', '#C71585'];
-
-        const randomInRange = (min, max) => {
-            return Math.random() * (max - min) + min;
-        };
-
-        const heart = confetti.shapeFromPath({
-            path: 'M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z',
-            matrix: [0.03333333333333333, 0, 0, 0.03333333333333333, -5.566666666666666, -5.533333333333333]
-        });
-
-        (function frame() {
-            const timeLeft = animationEnd - Date.now();
-
-            colors.forEach((color) => {
-                confetti({
-                    particleCount: 1,
-                    startVelocity: 0,
-                    ticks: Math.max(50, 75 * (timeLeft / duration)),
-                    origin: {
-                        x: Math.random(),
-                        y: Math.abs(Math.random() - (timeLeft / duration)),
-                    },
-                    zIndex: 1057,
-                    colors: [color],
-                    shapes: [heart],
-                    drift: randomInRange(-0.5, 0.5),
-                    gravity: randomInRange(0.5, 1),
-                    scalar: randomInRange(0.5, 1),
-                });
-            });
-
-            if (timeLeft > 0) {
-                requestAnimationFrame(frame);
-            }
-        })();
-    };
-
-    /**
-     * @returns {void}
-     */
-    const name = () => {
+    const showGuestName = () => {
+        /**
+         * Make sure "to=" is the last query string.
+         * Ex. domain.my.id/?id=some-uuid-here&to=name
+         */
         const raw = window.location.search.split('to=');
         let name = null;
 
-        if (raw.length >= 2 && raw[1].length > 0) {
-            name = decodeURIComponent(raw[1]);
+        if (raw.length > 1 && raw[1].length > 0) {
+            name = window.decodeURIComponent(raw[1]);
+        }
 
+        if (name) {
             const guest = document.getElementById('guest-name');
-            if (guest) {
-                const div = document.createElement('div');
-                div.classList.add('m-2');
-                div.innerHTML = `
-                <p class="mt-0 mb-1 mx-0 p-0" style="font-size: 0.95rem;">${guest.getAttribute('data-message')}</p>
+            const div = document.createElement('div');
+            div.classList.add('m-2');
+            div.innerHTML = `
+                <p class="mt-0 mb-1 mx-0 p-0" style="font-size: 0.95rem;">${guest?.getAttribute('data-message')}</p>
                 <h2 class="m-0 p-0">${util.escapeHtml(name)}</h2>`;
 
-                guest.appendChild(div);
-            }
+            guest?.appendChild(div);
         }
 
         const form = document.getElementById('form-name');
@@ -133,6 +93,7 @@ export const guest = (() => {
             form.value = information.get('name') ?? name;
         }
 
+        // remove loading screen
         opacity('loading', 0.025);
     };
 
@@ -158,7 +119,7 @@ export const guest = (() => {
         audio.init();
         theme.spyTop();
 
-        util.timeOut(animation, 1500);
+        util.timeOut(openAnimation, 1500);
     };
 
     /**
@@ -204,6 +165,7 @@ export const guest = (() => {
         normalize();
         countDownDate();
         information = storage('information');
+        document.addEventListener('progressDone', showGuestName);
 
         if (session.isAdmin()) {
             storage('user').clear();
@@ -256,7 +218,6 @@ export const guest = (() => {
     return {
         init,
         open,
-        name,
         modal,
         animate,
         closeInformation,

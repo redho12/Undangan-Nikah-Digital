@@ -275,6 +275,8 @@ export const comment = (() => {
 
             containerDiv.querySelector(`button[onclick="comment.like.like(this)"][data-uuid="${id}"]`).insertAdjacentHTML('beforebegin', card.renderReadMore(id, anchorTag ? anchorTag.getAttribute('data-uuids').split(',').concat(uuids) : uuids));
         }
+
+        addEventLike(response.data);
     };
 
     const cancel = (id) => {

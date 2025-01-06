@@ -1,5 +1,3 @@
-import { guest } from './guest.js';
-
 export const progress = (() => {
 
     /**
@@ -16,13 +14,6 @@ export const progress = (() => {
     let loaded = 0;
     let valid = true;
     let push = true;
-
-    /**
-     * @returns {void}
-     */
-    const onComplete = () => {
-        guest.name();
-    };
 
     /**
      * @returns {void}
@@ -54,7 +45,7 @@ export const progress = (() => {
         bar.style.width = Math.min((loaded / total) * 100, 100).toString() + '%';
 
         if (loaded === total) {
-            onComplete();
+            document.dispatchEvent(new Event('progressDone'));
         }
     };
 
