@@ -41,7 +41,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
 
     - name: Check if NETLIFY_AUTH_TOKEN is set
       run: |
@@ -51,7 +51,7 @@ jobs:
         fi
 
     - name: Install Netlify CLI
-      run: npm install netlify-cli --omit=dev
+      run: npm install netlify-cli -g --omit=dev
 
     - name: Add netlify.toml File for Headers
       run: |
