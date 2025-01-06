@@ -51,7 +51,7 @@ jobs:
         fi
 
     - name: Install Netlify CLI
-      run: npm install netlify-cli --production
+      run: npm install netlify-cli --omit=dev
 
     - name: Add netlify.toml File for Headers
       run: |
@@ -67,4 +67,4 @@ jobs:
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      run: sudo netlify deploy --prod --dir=. --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
+      run: sudo netlify deploy --prod --telemetry-disable --dir=. --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
