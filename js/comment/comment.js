@@ -15,6 +15,10 @@ export const comment = (() => {
     let tracker = null;
     let showHide = null;
 
+    const onNullComment = () => {
+        return `<div class="text-center p-4 my-2 bg-theme-${theme.isDarkMode('dark', 'light')} rounded-4 shadow"><p class="fw-bold p-0 m-0" style="font-size: 0.95rem;">Yuk bagikan undangan ini biar banyak komentarnya</p></div>`;
+    };
+
     const changeButton = (id, disabled) => {
         document.querySelector(`[data-button-action="${id}"]`).childNodes.forEach((e) => {
             e.disabled = disabled;
@@ -56,6 +60,11 @@ export const comment = (() => {
                 uuids.length === 0 ? n.remove() : n.setAttribute('data-uuids', uuids);
             }
         });
+
+        const length = document.getElementById('comments').children.length;
+        if (length == 0) {
+            document.getElementById('comments').innerHTML = onNullComment();
+        }
 
         owns.unset(id);
         document.getElementById(id).remove();
@@ -342,7 +351,6 @@ export const comment = (() => {
     const comment = () => {
         card.renderLoading();
         const comments = document.getElementById('comments');
-        const onNullComment = `<div class="text-center p-4 my-2 bg-theme-${theme.isDarkMode('dark', 'light')} rounded-4 shadow"><p class="fw-bold p-0 m-0" style="font-size: 0.95rem;">Yuk bagikan undangan ini biar banyak komentarnya</p></div>`;
 
         return request(HTTP_GET, `/api/comment?per=${pagination.getPer()}&next=${pagination.getNext()}`)
             .token(session.getToken())
@@ -352,7 +360,7 @@ export const comment = (() => {
                 comments.setAttribute('data-loading', 'false');
 
                 if (res.data.length === 0) {
-                    comments.innerHTML = onNullComment;
+                    comments.innerHTML = onNullComment();
                     return res;
                 }
 
