@@ -249,7 +249,7 @@ export const admin = (() => {
     };
 
     /**
-     * @returns {void}
+     * @returns {object}
      */
     const init = () => {
         auth.init();

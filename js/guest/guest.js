@@ -154,7 +154,7 @@ export const guest = (() => {
     };
 
     /**
-     * @returns {void}
+     * @returns {object}
      */
     const init = () => {
         theme.init();
@@ -217,6 +217,7 @@ export const guest = (() => {
         return {
             util,
             theme,
+            guest,
         };
     };
 

@@ -61,13 +61,13 @@ export const comment = (() => {
             }
         });
 
+        owns.unset(id);
+        document.getElementById(id).remove();
+
         const length = document.getElementById('comments').children.length;
         if (length == 0) {
             document.getElementById('comments').innerHTML = onNullComment();
         }
-
-        owns.unset(id);
-        document.getElementById(id).remove();
     };
 
     const update = async (button) => {

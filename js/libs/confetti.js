@@ -1,5 +1,8 @@
 export const confetti = window.confetti;
 
+/**
+ * @returns {any}
+ */
 const heartShape = () => {
     return confetti.shapeFromPath({
         path: 'M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z',
