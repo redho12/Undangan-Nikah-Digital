@@ -284,6 +284,7 @@ export const admin = (() => {
 
         return {
             util,
+            theme,
         };
     };
 

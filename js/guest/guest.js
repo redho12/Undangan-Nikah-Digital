@@ -216,6 +216,7 @@ export const guest = (() => {
 
         return {
             util,
+            theme,
         };
     };
 
