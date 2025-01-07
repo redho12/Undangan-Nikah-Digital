@@ -3,7 +3,5 @@ import { comment } from './comment/comment.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     window.undangan = admin.init();
-
-    window.admin = admin;
     window.comment = comment;
 });
