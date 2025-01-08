@@ -38,7 +38,7 @@ export const comment = (() => {
 
         changeButton(id, true);
         const btn = util.disableButton(button);
-        const like = document.querySelector(`[onclick="comment.like.like(this)"][data-uuid="${id}"]`);
+        const like = document.querySelector(`[onclick="undangan.comment.like.like(this)"][data-uuid="${id}"]`);
         like.disabled = true;
 
         const status = await request(HTTP_DELETE, '/api/comment/' + owns.get(id))
@@ -52,7 +52,7 @@ export const comment = (() => {
             return;
         }
 
-        document.querySelectorAll('a[onclick="comment.showOrHide(this)"]').forEach((n) => {
+        document.querySelectorAll('a[onclick="undangan.comment.showOrHide(this)"]').forEach((n) => {
             const oldUuids = n.getAttribute('data-uuids').split(',');
 
             if (oldUuids.find((i) => i === id)) {
@@ -96,7 +96,7 @@ export const comment = (() => {
 
         form.disabled = true;
 
-        const cancel = document.querySelector(`[onclick="comment.cancel('${id}')"]`);
+        const cancel = document.querySelector(`[onclick="undangan.comment.cancel('${id}')"]`);
         if (cancel) {
             cancel.disabled = true;
         }
@@ -127,7 +127,7 @@ export const comment = (() => {
         changeButton(id, false);
         document.getElementById(`inner-${id}`).remove();
 
-        const show = document.querySelector(`[onclick="comment.showMore(this, '${id}')"]`);
+        const show = document.querySelector(`[onclick="undangan.comment.showMore(this, '${id}')"]`);
         const original = card.convertMarkdownToHTML(util.escapeHtml(form.value));
         const content = document.getElementById(`content-${id}`);
 
@@ -196,7 +196,7 @@ export const comment = (() => {
         const form = document.getElementById(`form-${id ? `inner-${id}` : 'comment'}`);
         form.disabled = true;
 
-        const cancel = document.querySelector(`[onclick="comment.cancel('${id}')"]`);
+        const cancel = document.querySelector(`[onclick="undangan.comment.cancel('${id}')"]`);
         if (cancel) {
             cancel.disabled = true;
         }
@@ -282,7 +282,7 @@ export const comment = (() => {
                 anchorTag.remove();
             }
 
-            containerDiv.querySelector(`button[onclick="comment.like.like(this)"][data-uuid="${id}"]`).insertAdjacentHTML('beforebegin', card.renderReadMore(id, anchorTag ? anchorTag.getAttribute('data-uuids').split(',').concat(uuids) : uuids));
+            containerDiv.querySelector(`button[onclick="undangan.comment.like.like(this)"][data-uuid="${id}"]`).insertAdjacentHTML('beforebegin', card.renderReadMore(id, anchorTag ? anchorTag.getAttribute('data-uuids').split(',').concat(uuids) : uuids));
         }
 
         addEventLike(response.data);
@@ -380,8 +380,8 @@ export const comment = (() => {
 
                 showHide.set('hidden', traverse(res.data, showHide.get('hidden')));
                 comments.innerHTML = res.data.map((c) => card.renderContent(c)).join('');
-                res.data.forEach(fetchTracker);
                 res.data.forEach(addEventLike);
+                res.data.forEach(fetchTracker);
 
                 return res;
             });

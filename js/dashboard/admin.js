@@ -286,6 +286,7 @@ export const admin = (() => {
             util,
             theme,
             admin,
+            comment,
         };
     };
 

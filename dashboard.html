@@ -226,7 +226,7 @@
                             <textarea class="form-control shadow-sm mb-3 rounded-4" id="form-comment" name="form-comment" rows="3" placeholder="Type to comment" data-offline-disabled="false"></textarea>
 
                             <div class="d-flex justify-content-end mb-0">
-                                <button onclick="comment.send(this)" class="btn btn-primary btn-sm rounded-4 shadow-sm" data-offline-disabled="false"><i class="fa-solid fa-paper-plane me-1"></i>Send</button>
+                                <button onclick="undangan.comment.send(this)" class="btn btn-primary btn-sm rounded-4 shadow-sm" data-offline-disabled="false"><i class="fa-solid fa-paper-plane me-1"></i>Send</button>
                             </div>
                         </div>
 
@@ -237,7 +237,7 @@
                         <nav class="d-flex d-none justify-content-center py-3 mb-4" id="pagination">
                             <ul class="pagination mb-2 shadow-sm rounded-4">
                                 <li class="page-item disabled" id="previous">
-                                    <button class="page-link rounded-start-4" onclick="comment.pagination.previous(this)" data-offline-disabled="false">
+                                    <button class="page-link rounded-start-4" onclick="undangan.comment.pagination.previous(this)" data-offline-disabled="false">
                                         <i class="fa-solid fa-circle-left me-1"></i>Prev
                                     </button>
                                 </li>
@@ -245,7 +245,7 @@
                                     <span class="page-link text-dark" id="page">1</span>
                                 </li>
                                 <li class="page-item" id="next">
-                                    <button class="page-link rounded-end-4" onclick="comment.pagination.next(this)" data-offline-disabled="false">
+                                    <button class="page-link rounded-end-4" onclick="undangan.comment.pagination.next(this)" data-offline-disabled="false">
                                         Next<i class="fa-solid fa-circle-right ms-1"></i>
                                     </button>
                                 </li>

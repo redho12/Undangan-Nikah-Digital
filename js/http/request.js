@@ -91,7 +91,7 @@ export const request = (method, path) => {
         },
         /**
          * @param {string} token
-         * @returns {this}
+         * @returns {ReturnType<typeof request>}
          */
         token(token) {
             if (token.split('.').length === 3) {
@@ -104,7 +104,7 @@ export const request = (method, path) => {
         },
         /**
          * @param {object} body
-         * @returns {this}
+         * @returns {ReturnType<typeof request>}
          */
         body(body) {
             req.body = JSON.stringify(body);

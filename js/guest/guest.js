@@ -218,6 +218,7 @@ export const guest = (() => {
             util,
             theme,
             guest,
+            comment,
         };
     };
 

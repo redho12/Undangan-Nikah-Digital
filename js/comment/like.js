@@ -80,7 +80,7 @@ export const like = (() => {
             }
 
             div.setAttribute('data-liked', 'true');
-            await like(document.querySelector(`[onclick="comment.like.like(this)"][data-uuid="${uuid}"]`));
+            await like(document.querySelector(`[onclick="undangan.comment.like.like(this)"][data-uuid="${uuid}"]`));
             div.setAttribute('data-liked', 'false');
         }
 
