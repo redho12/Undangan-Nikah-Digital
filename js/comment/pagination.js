@@ -124,11 +124,7 @@ export const pagination = (() => {
     };
 
     const init = () => {
-        page = document.getElementById('page');
-        liPrev = document.getElementById('previous');
-        liNext = document.getElementById('next');
         paginate = document.getElementById('pagination');
-
         paginate.innerHTML = `
         <ul class="pagination mb-2 shadow-sm rounded-4">
             <li class="page-item disabled" id="previous">
@@ -145,6 +141,10 @@ export const pagination = (() => {
                 </button>
             </li>
         </ul>`;
+
+        page = document.getElementById('page');
+        liPrev = document.getElementById('previous');
+        liNext = document.getElementById('next');
     };
 
     return {
