@@ -349,8 +349,12 @@ export const comment = (() => {
     };
 
     const comment = () => {
-        card.renderLoading();
         const comments = document.getElementById('comments');
+
+        if (comments.getAttribute('data-loading') === 'false') {
+            comments.setAttribute('data-loading', 'true');
+            comments.innerHTML = card.renderLoading().repeat(pagination.getPer());
+        }
 
         return request(HTTP_GET, `/api/comment?per=${pagination.getPer()}&next=${pagination.getNext()}`)
             .token(session.getToken())
@@ -380,8 +384,9 @@ export const comment = (() => {
 
                 showHide.set('hidden', traverse(res.data, showHide.get('hidden')));
                 comments.innerHTML = res.data.map((c) => card.renderContent(c)).join('');
-                res.data.forEach(addEventLike);
+
                 res.data.forEach(fetchTracker);
+                res.data.forEach(addEventLike);
 
                 return res;
             });

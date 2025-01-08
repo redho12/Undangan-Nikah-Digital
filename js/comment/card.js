@@ -1,6 +1,5 @@
 import { util } from '../common/util.js';
 import { theme } from '../common/theme.js';
-import { pagination } from './pagination.js';
 import { storage } from '../common/storage.js';
 import { session } from '../common/session.js';
 
@@ -16,13 +15,7 @@ export const card = (() => {
     const maxCommentLength = 250;
 
     const renderLoading = () => {
-        const comments = document.getElementById('comments');
-        if (comments.getAttribute('data-loading') === 'true') {
-            return;
-        }
-
-        comments.setAttribute('data-loading', 'true');
-        comments.innerHTML = `
+        return `
         <div class="bg-theme-${theme.isDarkMode('dark', 'light')} shadow p-3 mx-0 mt-0 mb-3 rounded-4">
             <div class="d-flex flex-wrap justify-content-between align-items-center placeholder-wave">
                 <span class="placeholder bg-secondary col-5 rounded-3 my-1"></span>
@@ -34,7 +27,7 @@ export const card = (() => {
                 <span class="placeholder bg-secondary col-5 rounded-3"></span>
                 <span class="placeholder bg-secondary col-12 rounded-3 my-1"></span>
             </p>
-        </div>`.repeat(pagination.getPer());
+        </div>`;
     };
 
     const convertMarkdownToHTML = (input) => {
