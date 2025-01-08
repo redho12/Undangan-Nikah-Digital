@@ -9,6 +9,7 @@ export const pagination = (() => {
     let page = null;
     let liPrev = null;
     let liNext = null;
+    let paginate = null;
 
     const setPer = (num) => {
         perPage = Number(num);
@@ -27,7 +28,6 @@ export const pagination = (() => {
     const enableNext = () => liNext.classList.contains('disabled') ? liNext.classList.remove('disabled') : null;
 
     const enablePagination = () => {
-        const paginate = document.getElementById('pagination');
         if (paginate.classList.contains('d-none')) {
             paginate.classList.remove('d-none');
         }
@@ -127,6 +127,24 @@ export const pagination = (() => {
         page = document.getElementById('page');
         liPrev = document.getElementById('previous');
         liNext = document.getElementById('next');
+        paginate = document.getElementById('pagination');
+
+        paginate.innerHTML = `
+        <ul class="pagination mb-2 shadow-sm rounded-4">
+            <li class="page-item disabled" id="previous">
+                <button class="page-link rounded-start-4" onclick="undangan.comment.pagination.previous(this)" data-offline-disabled="false">
+                    <i class="fa-solid fa-circle-left me-1"></i>Prev
+                </button>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link text-light" id="page">1</span>
+            </li>
+            <li class="page-item" id="next">
+                <button class="page-link rounded-end-4" onclick="undangan.comment.pagination.next(this)" data-offline-disabled="false">
+                    Next<i class="fa-solid fa-circle-right ms-1"></i>
+                </button>
+            </li>
+        </ul>`;
     };
 
     return {
