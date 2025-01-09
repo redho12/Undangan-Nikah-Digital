@@ -38,7 +38,7 @@ export const util = (() => {
         button.disabled = true;
 
         const tmp = button.innerHTML;
-        button.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-2 p-0" style="height: 0.8rem; width: 0.8rem"></span>${message}`;
+        button.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></span>${message}`;
 
         return {
             restore: () => {
@@ -57,7 +57,7 @@ export const util = (() => {
 
         const label = document.querySelector(`label[for="${checkbox.id}"]`);
         const tmp = label.innerHTML;
-        label.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-2 p-0" style="height: 0.8rem; width: 0.8rem"></span>${tmp}`;
+        label.innerHTML = `<span class="spinner-border spinner-border-sm my-0 ms-0 me-1 p-0" style="height: 0.8rem; width: 0.8rem"></span>${tmp}`;
 
         return {
             restore: () => {
