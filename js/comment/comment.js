@@ -64,9 +64,9 @@ export const comment = (() => {
         owns.unset(id);
         document.getElementById(id).remove();
 
-        const comment = document.getElementById('comments');
-        if (comment.children.length == 0) {
-            comment.innerHTML = onNullComment();
+        const comments = document.getElementById('comments');
+        if (comments.children.length == 0) {
+            comments.innerHTML = onNullComment();
         }
     };
 
@@ -249,14 +249,14 @@ export const comment = (() => {
             }
 
             response.data.is_admin = session.isAdmin();
-            const length = document.getElementById('comments').children.length;
-            pagination.setResultData(length);
+            const comments = document.getElementById('comments');
+            pagination.setResultData(comments.children.length);
 
-            if (length == pagination.getPer()) {
-                document.getElementById('comments').lastElementChild.remove();
+            if (comments.children.length == pagination.getPer()) {
+                comments.lastElementChild.remove();
             }
 
-            document.getElementById('comments').innerHTML = card.renderContent(response.data) + document.getElementById('comments').innerHTML;
+            comments.innerHTML = card.renderContent(response.data) + comments.innerHTML;
             scroll();
         }
 
