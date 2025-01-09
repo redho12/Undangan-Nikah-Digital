@@ -6,7 +6,7 @@ import { theme } from '../common/theme.js';
 import { storage } from '../common/storage.js';
 import { session } from '../common/session.js';
 import { offline } from '../common/offline.js';
-import { comment } from '../comment/comment.js';
+import { comment } from '../component/comment.js';
 import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../http/request.js';
 
 export const admin = (() => {

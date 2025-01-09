@@ -5,8 +5,8 @@ import { theme } from '../common/theme.js';
 import { storage } from '../common/storage.js';
 import { session } from '../common/session.js';
 import { offline } from '../common/offline.js';
-import { comment } from '../comment/comment.js';
 import { bootstrap } from '../libs/bootstrap.js';
+import { comment } from '../component/comment.js';
 import { confetti, openAnimation } from '../libs/confetti.js';
 
 export const guest = (() => {
