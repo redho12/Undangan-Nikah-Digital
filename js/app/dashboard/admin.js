@@ -1,13 +1,13 @@
 import { auth } from './auth.js';
 import { navbar } from './navbar.js';
-import { dto } from '../http/dto.js';
-import { util } from '../common/util.js';
-import { theme } from '../common/theme.js';
-import { storage } from '../common/storage.js';
-import { session } from '../common/session.js';
-import { offline } from '../common/offline.js';
+import { util } from '../../common/util.js';
+import { dto } from '../../connection/dto.js';
+import { theme } from '../../common/theme.js';
+import { storage } from '../../common/storage.js';
+import { session } from '../../common/session.js';
+import { offline } from '../../common/offline.js';
 import { comment } from '../component/comment.js';
-import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../http/request.js';
+import { request, HTTP_GET, HTTP_PATCH, HTTP_PUT } from '../../connection/request.js';
 
 export const admin = (() => {
 

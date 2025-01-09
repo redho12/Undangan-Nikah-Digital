@@ -1,13 +1,13 @@
 import { audio } from './audio.js';
 import { progress } from './progress.js';
-import { util } from '../common/util.js';
-import { theme } from '../common/theme.js';
-import { storage } from '../common/storage.js';
-import { session } from '../common/session.js';
-import { offline } from '../common/offline.js';
-import { bootstrap } from '../libs/bootstrap.js';
+import { util } from '../../common/util.js';
+import { theme } from '../../common/theme.js';
+import { storage } from '../../common/storage.js';
+import { session } from '../../common/session.js';
+import { offline } from '../../common/offline.js';
 import { comment } from '../component/comment.js';
-import { confetti, openAnimation } from '../libs/confetti.js';
+import { bootstrap } from '../../libs/bootstrap.js';
+import { confetti, openAnimation } from '../../libs/confetti.js';
 
 export const guest = (() => {
 

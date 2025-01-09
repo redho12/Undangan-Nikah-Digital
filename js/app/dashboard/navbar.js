@@ -1,4 +1,4 @@
-import { bootstrap } from '../libs/bootstrap.js';
+import { bootstrap } from '../../libs/bootstrap.js';
 
 export const navbar = (() => {
 
