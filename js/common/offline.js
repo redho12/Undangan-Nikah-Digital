@@ -6,41 +6,34 @@ export const offline = (() => {
     let alert = null;
     let online = true;
 
-    const show = (isUp = true) => new Promise((res) => {
+    /**
+     * @param {boolean} isUp 
+     * @returns {Promise<void>}
+     */
+    const show = (isUp) => new Promise((res) => {
         let op = parseFloat(alert.style.opacity);
         let clear = null;
 
+        const step = isUp ? 0.05 : -0.05;
+        const target = isUp ? 1 : 0;
+
         const callback = () => {
-            if (!isUp && op > 0) {
-                op -= 0.05;
-                alert.style.opacity = op.toFixed(2);
-                return;
-            }
+            op = Math.max(0, Math.min(1, op + step));
+            alert.style.opacity = op.toFixed(2);
 
-            if (isUp && op < 1) {
-                op += 0.05;
-                alert.style.opacity = op.toFixed(2);
-                return;
-            }
-
-            res();
-            clearInterval(clear);
-            clear = null;
-
-            if (op <= 0) {
-                alert.style.opacity = '0';
-                return;
-            }
-
-            if (op >= 1) {
-                alert.style.opacity = '1';
-                return;
+            if (op === target) {
+                res();
+                clearInterval(clear);
+                clear = null;
             }
         };
 
         clear = setInterval(callback, 10);
     });
 
+    /**
+     * @returns {void}
+     */
     const hide = () => {
         let t = null;
         t = setTimeout(() => {
@@ -51,6 +44,9 @@ export const offline = (() => {
         }, 3000);
     };
 
+    /**
+     * @returns {void}
+     */
     const setOffline = () => {
         const el = alert.firstElementChild.firstElementChild;
         el.classList.remove('bg-success');
@@ -58,6 +54,9 @@ export const offline = (() => {
         el.firstElementChild.innerHTML = '<i class="fa-solid fa-ban me-2"></i>Koneksi tidak tersedia';
     };
 
+    /**
+     * @returns {void}
+     */
     const setOnline = () => {
         const el = alert.firstElementChild.firstElementChild;
         el.classList.remove('bg-danger');
@@ -65,33 +64,52 @@ export const offline = (() => {
         el.firstElementChild.innerHTML = '<i class="fa-solid fa-cloud me-2"></i>Koneksi tersedia kembali';
     };
 
+    /**
+     * @returns {Promise<void>}
+     */
     const setDefaultState = async () => {
         await show(false);
         setOffline();
     };
 
+    /**
+     * @returns {void}
+     */
     const changeState = () => {
-        document.querySelectorAll('button[data-offline-disabled], input[data-offline-disabled], select[data-offline-disabled], textarea[data-offline-disabled]').forEach((e) => {
+        const classes = [
+            'input[data-offline-disabled]',
+            'button[data-offline-disabled]',
+            'select[data-offline-disabled]',
+            'textarea[data-offline-disabled]'
+        ].join(', ');
+
+        document.querySelectorAll(classes).forEach((e) => {
+
             e.dispatchEvent(new Event(isOnline() ? 'online' : 'offline'));
             e.setAttribute('data-offline-disabled', isOnline() ? 'false' : 'true');
 
             if (e.tagName === 'BUTTON') {
                 isOnline() ? e.classList.remove('disabled') : e.classList.add('disabled');
-                return;
+            } else {
+                isOnline() ? e.removeAttribute('disabled') : e.setAttribute('disabled', 'true');
             }
-
-            isOnline() ? e.removeAttribute('disabled') : e.setAttribute('disabled', 'true');
         });
     };
 
+    /**
+     * @returns {void}
+     */
     const onOffline = () => {
         online = false;
 
         setOffline();
-        show();
+        show(true);
         changeState();
     };
 
+    /**
+     * @returns {void}
+     */
     const onOnline = () => {
         online = true;
 
@@ -100,11 +118,18 @@ export const offline = (() => {
         changeState();
     };
 
+    /**
+     * @returns {boolean}
+     */
     const isOnline = () => online;
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
         window.addEventListener('online', onOnline);
         window.addEventListener('offline', onOffline);
+
         alert = document.getElementById('offline-mode');
         alert.innerHTML = `
         <div class="d-flex justify-content-center mx-auto">
