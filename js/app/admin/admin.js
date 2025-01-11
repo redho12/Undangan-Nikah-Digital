@@ -285,25 +285,26 @@ export const admin = (() => {
         return {
             util,
             theme,
-            admin,
             comment,
+            admin: {
+                auth,
+                navbar,
+                logout,
+                download,
+                regenerate,
+                editComment,
+                replyComment,
+                deleteComment,
+                changeName,
+                changePassword,
+                changeFilterBadWord,
+                enableButtonName,
+                enableButtonPassword,
+            },
         };
     };
 
     return {
-        auth,
-        navbar,
         init,
-        logout,
-        download,
-        regenerate,
-        editComment,
-        replyComment,
-        deleteComment,
-        changeName,
-        changePassword,
-        changeFilterBadWord,
-        enableButtonName,
-        enableButtonPassword,
     };
 })();

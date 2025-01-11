@@ -2,8 +2,6 @@ import { storage } from './storage.js';
 
 export const theme = (() => {
 
-    const THEME_DARK = 'dark';
-    const THEME_LIGHT = 'light';
     const themeColors = {
         '#000000': '#ffffff',
         '#ffffff': '#000000',
@@ -13,114 +11,131 @@ export const theme = (() => {
     const themeLight = ['#ffffff', '#f8f9fa'];
     const themeDark = ['#000000', '#212529'];
 
-    let theme = null;
     let isAuto = false;
+
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
+    let theme = null;
+
+    /**
+     * @type {HTMLElement|null}
+     */
     let metaTheme = null;
+
+    /**
+     * @type {IntersectionObserver|null}
+     */
     let observerLight = null;
+
+    /**
+     * @type {IntersectionObserver|null}
+     */
     let observerDark = null;
 
+    /**
+     * @param {HTMLElement} element 
+     */
     const toLight = (element) => {
-        if (element.classList.contains('text-light')) {
-            element.classList.remove('text-light');
-            element.classList.add('text-dark');
-        }
+        const classMap = {
+            'text-light': 'text-dark',
+            'btn-theme-light': 'btn-theme-dark',
+            'bg-dark': 'bg-light',
+            'bg-black': 'bg-white',
+            'bg-theme-dark': 'bg-theme-light',
+            'color-theme-black': 'color-theme-white',
+            'btn-outline-light': 'btn-outline-dark',
+            'bg-cover-black': 'bg-cover-white'
+        };
 
-        if (element.classList.contains('btn-theme-light')) {
-            element.classList.remove('btn-theme-light');
-            element.classList.add('btn-theme-dark');
-        }
-
-        if (element.classList.contains('bg-dark')) {
-            element.classList.remove('bg-dark');
-            element.classList.add('bg-light');
-        }
-
-        if (element.classList.contains('bg-black')) {
-            element.classList.remove('bg-black');
-            element.classList.add('bg-white');
-        }
-
-        if (element.classList.contains('bg-theme-dark')) {
-            element.classList.remove('bg-theme-dark');
-            element.classList.add('bg-theme-light');
-        }
-
-        if (element.classList.contains('color-theme-black')) {
-            element.classList.remove('color-theme-black');
-            element.classList.add('color-theme-white');
-        }
-
-        if (element.classList.contains('btn-outline-light')) {
-            element.classList.remove('btn-outline-light');
-            element.classList.add('btn-outline-dark');
-        }
-
-        if (element.classList.contains('bg-cover-black')) {
-            element.classList.remove('bg-cover-black');
-            element.classList.add('bg-cover-white');
-        }
+        Object.entries(classMap).forEach(([oldClass, newClass]) => {
+            if (element.classList.contains(oldClass)) {
+                element.classList.replace(oldClass, newClass);
+            }
+        });
     };
 
+    /**
+     * @param {HTMLElement} element 
+     */
     const toDark = (element) => {
-        if (element.classList.contains('text-dark')) {
-            element.classList.remove('text-dark');
-            element.classList.add('text-light');
-        }
+        const classMap = {
+            'text-dark': 'text-light',
+            'btn-theme-dark': 'btn-theme-light',
+            'bg-light': 'bg-dark',
+            'bg-white': 'bg-black',
+            'bg-theme-light': 'bg-theme-dark',
+            'color-theme-white': 'color-theme-black',
+            'btn-outline-dark': 'btn-outline-light',
+            'bg-cover-white': 'bg-cover-black'
+        };
 
-        if (element.classList.contains('btn-theme-dark')) {
-            element.classList.remove('btn-theme-dark');
-            element.classList.add('btn-theme-light');
-        }
-
-        if (element.classList.contains('bg-light')) {
-            element.classList.remove('bg-light');
-            element.classList.add('bg-dark');
-        }
-
-        if (element.classList.contains('bg-white')) {
-            element.classList.remove('bg-white');
-            element.classList.add('bg-black');
-        }
-
-        if (element.classList.contains('bg-theme-light')) {
-            element.classList.remove('bg-theme-light');
-            element.classList.add('bg-theme-dark');
-        }
-
-        if (element.classList.contains('color-theme-white')) {
-            element.classList.remove('color-theme-white');
-            element.classList.add('color-theme-black');
-        }
-
-        if (element.classList.contains('btn-outline-dark')) {
-            element.classList.remove('btn-outline-dark');
-            element.classList.add('btn-outline-light');
-        }
-
-        if (element.classList.contains('bg-cover-white')) {
-            element.classList.remove('bg-cover-white');
-            element.classList.add('bg-cover-black');
-        }
+        Object.entries(classMap).forEach(([oldClass, newClass]) => {
+            if (element.classList.contains(oldClass)) {
+                element.classList.replace(oldClass, newClass);
+            }
+        });
     };
 
+    /**
+     * @returns {void}
+     */
+    const setLight = () => theme.set('active', 'light');
+
+    /**
+     * @returns {void}
+     */
+    const setDark = () => theme.set('active', 'dark');
+
+    /**
+     * @returns {void}
+     */
     const onLight = () => {
-        theme.set('active', THEME_LIGHT);
-        document.documentElement.setAttribute('data-bs-theme', THEME_LIGHT);
+        setLight();
+        document.documentElement.setAttribute('data-bs-theme', 'light');
 
-        const elements = document.querySelectorAll('.text-light, .btn-theme-light, .bg-dark, .bg-black, .bg-theme-dark, .color-theme-black, .btn-outline-light, .bg-cover-black');
-        elements.forEach((e) => observerLight.observe(e));
+        const classes = [
+            '.text-light',
+            '.btn-theme-light',
+            '.bg-dark',
+            '.bg-black',
+            '.bg-theme-dark',
+            '.color-theme-black',
+            '.btn-outline-light',
+            '.bg-cover-black'
+        ].join(', ');
+
+        document.querySelectorAll(classes).forEach((e) => observerLight.observe(e));
     };
 
+    /**
+     * @returns {void}
+     */
     const onDark = () => {
-        theme.set('active', THEME_DARK);
-        document.documentElement.setAttribute('data-bs-theme', THEME_DARK);
+        setDark();
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
 
-        const elements = document.querySelectorAll('.text-dark, .btn-theme-dark, .bg-light, .bg-white, .bg-theme-light, .color-theme-white, .btn-outline-dark, .bg-cover-white');
-        elements.forEach((e) => observerDark.observe(e));
+        const classes = [
+            '.text-dark',
+            '.btn-theme-dark',
+            '.bg-light',
+            '.bg-white',
+            '.bg-theme-light',
+            '.color-theme-white',
+            '.btn-outline-dark',
+            '.bg-cover-white'
+        ].join(', ');
+
+        document.querySelectorAll(classes).forEach((e) => observerDark.observe(e));
     };
 
+    /**
+     * @param {string|null} [onDark=null] 
+     * @param {string|null} [onLight=null] 
+     * @returns {boolean|string}
+     */
     const isDarkMode = (onDark = null, onLight = null) => {
-        const status = theme.get('active') === THEME_DARK;
+        const status = theme.get('active') === 'dark';
 
         if (onDark && onLight) {
             return status ? onDark : onLight;
@@ -129,42 +144,40 @@ export const theme = (() => {
         return status;
     };
 
-    const change = () => {
-        if (isDarkMode()) {
-            onLight();
-        } else {
-            onDark();
-        }
-    };
+    /**
+     * @returns {void}
+     */
+    const change = () => isDarkMode() ? onLight() : onDark();
 
+    /**
+     * @returns {boolean}
+     */
     const isAutoMode = () => isAuto;
 
+    /**
+     * @returns {void}
+     */
     const initObserver = () => {
-        observerLight = new IntersectionObserver((es, o) => {
+        const createObserver = (action, themes) => new IntersectionObserver((es, o) => {
 
-            es.filter((e) => e.isIntersecting).forEach((e) => toLight(e.target));
-            es.filter((e) => !e.isIntersecting).forEach((e) => toLight(e.target));
-
-            o.disconnect();
-
-            const now = metaTheme.getAttribute('content');
-            metaTheme.setAttribute('content', themeDark.some((i) => i === now) ? themeColors[now] : now);
-        });
-
-        observerDark = new IntersectionObserver((es, o) => {
-
-            es.filter((e) => e.isIntersecting).forEach((e) => toDark(e.target));
-            es.filter((e) => !e.isIntersecting).forEach((e) => toDark(e.target));
+            es.filter((e) => e.isIntersecting).forEach((e) => action(e.target));
+            es.filter((e) => !e.isIntersecting).forEach((e) => action(e.target));
 
             o.disconnect();
 
             const now = metaTheme.getAttribute('content');
-            metaTheme.setAttribute('content', themeLight.some((i) => i === now) ? themeColors[now] : now);
+            metaTheme.setAttribute('content', themes.some((i) => i === now) ? themeColors[now] : now);
         });
+
+        observerLight = createObserver(toLight, themeDark);
+        observerDark = createObserver(toDark, themeLight);
     };
 
+    /**
+     * @returns {void}
+     */
     const spyTop = () => {
-        const observerTop = new IntersectionObserver((es) => {
+        const callback = (es) => {
             es.filter((e) => e.isIntersecting).forEach((e) => {
                 const themeColor = ['bg-black', 'bg-white'].some((i) => e.target.classList.contains(i))
                     ? isDarkMode(themeDark[0], themeLight[0])
@@ -172,13 +185,15 @@ export const theme = (() => {
 
                 metaTheme.setAttribute('content', themeColor);
             });
-        }, {
-            rootMargin: '0% 0% -95% 0%',
-        });
+        };
 
+        const observerTop = new IntersectionObserver(callback, { rootMargin: '0% 0% -95% 0%' });
         document.querySelectorAll('section').forEach((e) => observerTop.observe(e));
     };
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
         theme = storage('theme');
         metaTheme = document.querySelector('meta[name="theme-color"]');
@@ -186,23 +201,18 @@ export const theme = (() => {
         initObserver();
 
         if (!theme.has('active')) {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                theme.set('active', THEME_DARK);
-            } else {
-                theme.set('active', THEME_LIGHT);
-            }
+            window.matchMedia('(prefers-color-scheme: dark)').matches ? setDark() : setLight();
         }
 
         switch (document.body.getAttribute('data-theme')) {
             case 'dark':
-                theme.set('active', THEME_DARK);
+                setDark();
                 break;
             case 'light':
-                theme.set('active', THEME_LIGHT);
+                setLight();
                 break;
             default:
                 isAuto = true;
-                break;
         }
 
         if (isDarkMode()) {

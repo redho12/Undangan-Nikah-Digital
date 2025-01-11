@@ -257,7 +257,7 @@
                             <p class="mx-0 mt-0 mb-1 p-0 fw-bold"><i class="fa-solid fa-person me-2"></i>Name</p>
                             <form>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="form-name" name="form-name" oninput="undangan.admin.enableButtonName()" data-offline-disabled="false">
+                                    <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="form-name" minlength="2" maxlength="50" name="form-name" oninput="undangan.admin.enableButtonName()" autocomplete="name" data-offline-disabled="false">
                                 </div>
                             </form>
 
@@ -308,10 +308,10 @@
                             <form>
                                 <input hidden type="text" name="username" autocomplete="username" value="...">
                                 <div class="my-2">
-                                    <input type="password" class="form-control form-control-sm rounded-4 shadow-sm" id="old_password" name="old_password" placeholder="Old Password" autocomplete="current-password" data-offline-disabled="false">
+                                    <input type="password" class="form-control form-control-sm rounded-4 shadow-sm" id="old_password" minlength="8" maxlength="20" name="old_password" placeholder="Old Password" autocomplete="current-password" data-offline-disabled="false">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control form-control-sm rounded-4 shadow-sm" id="new_password" name="new_password" oninput="undangan.admin.enableButtonPassword()" placeholder="New Password" autocomplete="new-password" data-offline-disabled="false">
+                                    <input type="password" class="form-control form-control-sm rounded-4 shadow-sm" id="new_password" minlength="8" maxlength="20" name="new_password" oninput="undangan.admin.enableButtonPassword()" placeholder="New Password" autocomplete="new-password" data-offline-disabled="false">
                                 </div>
                             </form>
 
@@ -335,7 +335,6 @@
                                 If you want to support me, consider <a target="_blank" href="https://saweria.co/dewanakl">buying me a coffee</a><i class="fa-solid fa-mug-hot ms-1"></i>
                             </p>
                         </div>
-
                     </section>
                 </div>
             </div>
@@ -352,15 +351,15 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="loginEmail" class="form-label"><i class="fa-solid fa-envelope me-2"></i>Email</label>
-                            <input type="email" class="form-control shadow-sm rounded-4" id="loginEmail" placeholder="Masukkan email Anda" required autocomplete="email" autofocus>
+                            <label for="loginEmail" class="form-label mb-1"><i class="fa-solid fa-envelope me-2"></i>Email</label>
+                            <input type="email" class="form-control shadow-sm rounded-4" id="loginEmail" minlength="5" maxlength="254" placeholder="Masukkan email Anda" required autocomplete="email" data-offline-disabled="false">
                         </div>
                         <div class="mb-3">
-                            <label for="loginPassword" class="form-label"><i class="fa-solid fa-lock me-2"></i>Password</label>
-                            <input type="password" class="form-control shadow-sm rounded-4" id="loginPassword" placeholder="Masukkan password Anda" required autocomplete="current-password">
+                            <label for="loginPassword" class="form-label mb-1"><i class="fa-solid fa-lock me-2"></i>Password</label>
+                            <input type="password" class="form-control shadow-sm rounded-4" id="loginPassword" minlength="8" maxlength="20" placeholder="Masukkan password Anda" required autocomplete="current-password" data-offline-disabled="false">
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary shadow-sm rounded-4" onclick="undangan.admin.auth.login(this)"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</button>
+                            <button type="submit" class="btn btn-primary shadow-sm rounded-4" onclick="undangan.admin.auth.login(this)" data-offline-disabled="false"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</button>
                         </div>
                     </form>
                 </div>

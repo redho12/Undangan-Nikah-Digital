@@ -217,16 +217,17 @@ export const guest = (() => {
         return {
             util,
             theme,
-            guest,
             comment,
+            guest: {
+                open,
+                modal,
+                animate,
+                closeInformation,
+            },
         };
     };
 
     return {
         init,
-        open,
-        modal,
-        animate,
-        closeInformation,
     };
 })();
