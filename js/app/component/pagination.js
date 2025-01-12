@@ -6,37 +6,81 @@ export const pagination = (() => {
     let pageNow = 0;
     let resultData = 0;
 
+    /**
+     * @type {HTMLElement|null}
+     */
     let page = null;
+
+    /**
+     * @type {HTMLElement|null}
+     */
     let liPrev = null;
+
+    /**
+     * @type {HTMLElement|null}
+     */
     let liNext = null;
+
+    /**
+     * @type {HTMLElement|null}
+     */
     let paginate = null;
 
+    /**
+     * @param {number} num 
+     * @returns {void}
+     */
     const setPer = (num) => {
         perPage = Number(num);
     };
 
+    /**
+     * @returns {number}
+     */
     const getPer = () => perPage;
 
+    /**
+     * @returns {number}
+     */
     const getNext = () => pageNow;
 
+    /**
+     * @returns {void}
+     */
     const disabledPrevious = () => !liPrev.classList.contains('disabled') ? liPrev.classList.add('disabled') : null;
 
+    /**
+     * @returns {void}
+     */
     const enablePrevious = () => liPrev.classList.contains('disabled') ? liPrev.classList.remove('disabled') : null;
 
+    /**
+     * @returns {void}
+     */
     const disabledNext = () => !liNext.classList.contains('disabled') ? liNext.classList.add('disabled') : null;
 
+    /**
+     * @returns {void}
+     */
     const enableNext = () => liNext.classList.contains('disabled') ? liNext.classList.remove('disabled') : null;
 
+    /**
+     * @returns {void}
+     */
     const enablePagination = () => {
         if (paginate.classList.contains('d-none')) {
             paginate.classList.remove('d-none');
         }
     };
 
+    /**
+     * @param {HTMLButtonElement} button 
+     * @returns {object}
+     */
     const buttonAction = (button) => {
         button.disabled = true;
         const tmp = button.innerHTML;
-        button.innerHTML = `<div class="spinner-border spinner-border-sm my-0 mx-1 p-0" style="height: 0.8rem; width: 0.8rem;"></div>`;
+        button.innerHTML = `<span class="spinner-border spinner-border-sm my-0 mx-1 p-0" style="height: 0.8rem; width: 0.8rem;"></span>`;
 
         const process = async () => {
             await comment.comment();
@@ -52,7 +96,7 @@ export const pagination = (() => {
 
             button.innerHTML = 'Next' + button.innerHTML;
             await process();
-            page.innerText = parseInt(page.innerText) + 1;
+            page.innerText = String(parseInt(page.innerText) + 1);
         };
 
         const prev = async () => {
@@ -60,7 +104,7 @@ export const pagination = (() => {
 
             button.innerHTML = button.innerHTML + 'Prev';
             await process();
-            page.innerText = parseInt(page.innerText) - 1;
+            page.innerText = String(parseInt(page.innerText) - 1);
         };
 
         return {
@@ -69,6 +113,9 @@ export const pagination = (() => {
         };
     };
 
+    /**
+     * @returns {Promise<boolean>}
+     */
     const reset = async () => {
         if (pageNow === 0) {
             return false;
@@ -85,6 +132,10 @@ export const pagination = (() => {
         return true;
     };
 
+    /**
+     * @param {number} len 
+     * @returns {void}
+     */
     const setResultData = (len) => {
         resultData = len;
 
@@ -101,6 +152,10 @@ export const pagination = (() => {
         enablePagination();
     };
 
+    /**
+     * @param {HTMLButtonElement} button 
+     * @returns {Promise<void>}
+     */
     const previous = async (button) => {
         disabledPrevious();
 
@@ -112,6 +167,10 @@ export const pagination = (() => {
         await buttonAction(button).prev();
     };
 
+    /**
+     * @param {HTMLButtonElement} button 
+     * @returns {Promise<void>}
+     */
     const next = async (button) => {
         disabledNext();
 
@@ -123,6 +182,9 @@ export const pagination = (() => {
         await buttonAction(button).next();
     };
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
         paginate = document.getElementById('pagination');
         paginate.innerHTML = `
