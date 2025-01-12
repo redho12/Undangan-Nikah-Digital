@@ -40,7 +40,9 @@ export const offline = (() => {
             clearTimeout(t);
             t = null;
 
-            setDefaultState();
+            if (online) {
+                setDefaultState();
+            }
         }, 3000);
     };
 
