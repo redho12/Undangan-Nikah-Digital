@@ -164,8 +164,8 @@ export const card = (() => {
         inner.classList.add('my-2');
         inner.id = `inner-${id}`;
         inner.innerHTML = `
-        <label for="form-inner-${id}" class="form-label" style="font-size: 0.95rem;"><i class="fa-solid fa-reply me-1"></i>Reply</label>
-        <textarea class="form-control shadow-sm rounded-4 mb-2" id="form-inner-${id}" placeholder="Type reply comment" rows="3" data-offline-disabled="false"></textarea>
+        <label for="form-inner-${id}" class="form-label my-1" style="font-size: 0.95rem;"><i class="fa-solid fa-reply me-2"></i>Reply</label>
+        <textarea class="form-control shadow-sm rounded-4 mb-2" id="form-inner-${id}" minlength="1" maxlength="1000" placeholder="Type reply comment" rows="3" data-offline-disabled="false"></textarea>
         <div class="d-flex flex-wrap justify-content-end align-items-center mb-0">
             <button style="font-size: 0.8rem;" onclick="undangan.comment.cancel('${id}')" class="btn btn-sm btn-outline-${theme.isDarkMode('light', 'dark')} rounded-4 py-0 me-1" data-offline-disabled="false">Cancel</button>
             <button style="font-size: 0.8rem;" onclick="undangan.comment.send(this)" data-uuid="${id}" class="btn btn-sm btn-outline-${theme.isDarkMode('light', 'dark')} rounded-4 py-0" data-offline-disabled="false">Send</button>
@@ -179,13 +179,13 @@ export const card = (() => {
         inner.classList.add('my-2');
         inner.id = `inner-${id}`;
         inner.innerHTML = `
-        <label for="form-inner-${id}" class="form-label" style="font-size: 0.95rem;"><i class="fa-solid fa-pen me-1"></i>Edit</label>
+        <label for="form-inner-${id}" class="form-label my-1" style="font-size: 0.95rem;"><i class="fa-solid fa-pen me-2"></i>Edit</label>
         ${document.getElementById(id).getAttribute('data-parent') === 'true' && !session.isAdmin() ? `
         <select class="form-select shadow-sm mb-2 rounded-4" id="form-inner-presence-${id}" data-offline-disabled="false">
             <option value="1" ${presence ? 'selected' : ''}>Datang</option>
             <option value="2" ${presence ? '' : 'selected'}>Berhalangan</option>
         </select>` : ''}
-        <textarea class="form-control shadow-sm rounded-4 mb-2" id="form-inner-${id}" placeholder="Type update comment" rows="3" data-offline-disabled="false"></textarea>
+        <textarea class="form-control shadow-sm rounded-4 mb-2" id="form-inner-${id}" minlength="1" maxlength="1000" placeholder="Type update comment" rows="3" data-offline-disabled="false"></textarea>
         <div class="d-flex flex-wrap justify-content-end align-items-center mb-0">
             <button style="font-size: 0.8rem;" onclick="undangan.comment.cancel('${id}')" class="btn btn-sm btn-outline-${theme.isDarkMode('light', 'dark')} rounded-4 py-0 me-1" data-offline-disabled="false">Cancel</button>
             <button style="font-size: 0.8rem;" onclick="undangan.comment.update(this)" data-uuid="${id}" class="btn btn-sm btn-outline-${theme.isDarkMode('light', 'dark')} rounded-4 py-0" data-offline-disabled="false">Update</button>

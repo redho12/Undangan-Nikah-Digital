@@ -16,10 +16,12 @@ export const like = (() => {
      * @returns {Promise<void>}
      */
     const like = async (button) => {
-        const id = button.getAttribute('data-uuid');
 
         const info = button.firstElementChild;
         const heart = button.lastElementChild;
+
+        const id = button.getAttribute('data-uuid');
+        const count = parseInt(info.getAttribute('data-count-like'));
 
         button.disabled = true;
 
@@ -34,7 +36,7 @@ export const like = (() => {
                         heart.classList.remove('fa-solid', 'text-danger');
                         heart.classList.add('fa-regular');
 
-                        info.setAttribute('data-count-like', (parseInt(info.getAttribute('data-count-like')) - 1).toString());
+                        info.setAttribute('data-count-like', String(count - 1));
                     }
                 });
         } else {
@@ -48,7 +50,7 @@ export const like = (() => {
                         heart.classList.remove('fa-regular');
                         heart.classList.add('fa-solid', 'text-danger');
 
-                        info.setAttribute('data-count-like', (parseInt(info.getAttribute('data-count-like')) + 1).toString());
+                        info.setAttribute('data-count-like', String(count + 1));
                     }
                 });
         }
@@ -70,7 +72,10 @@ export const like = (() => {
         const tapLength = currentTime - parseInt(div.getAttribute('data-tapTime'));
         const uuid = div.id.replace('body-content-', '');
 
-        if (tapLength < 300 && tapLength > 0 && !likes.has(uuid) && div.getAttribute('data-liked') !== 'true') {
+        const isTapTap = tapLength < 300 && tapLength > 0;
+        const notLiked = !likes.has(uuid) && div.getAttribute('data-liked') !== 'true';
+
+        if (isTapTap && notLiked) {
             if (navigator.vibrate) {
                 navigator.vibrate(100);
             }
@@ -79,8 +84,10 @@ export const like = (() => {
                 tapTapAnimation(div);
             }
 
+            const likeButton = document.querySelector(`[onclick="undangan.comment.like.like(this)"][data-uuid="${uuid}"]`);
+
             div.setAttribute('data-liked', 'true');
-            await like(document.querySelector(`[onclick="undangan.comment.like.like(this)"][data-uuid="${uuid}"]`));
+            await like(likeButton);
             div.setAttribute('data-liked', 'false');
         }
 
