@@ -51,7 +51,10 @@ export const auth = (() => {
             }
 
             return res;
-        }, clearSession);
+        }, (res) => {
+            clearSession();
+            return res;
+        });
     };
 
     /**

@@ -11,13 +11,15 @@ const heartShape = () => {
 };
 
 /**
+ * @param {number} [until=15]
  * @returns {void}
  */
-export const openAnimation = () => {
-    const duration = 15 * 1000;
+export const openAnimation = (until = 15) => {
+    const duration = until * 1000;
     const animationEnd = Date.now() + duration;
-    const colors = ['#FFC0CB', '#FF1493', '#C71585'];
+
     const heart = heartShape();
+    const colors = ['#FFC0CB', '#FF1493', '#C71585'];
 
     const randomInRange = (min, max) => {
         return Math.random() * (max - min) + min;
@@ -57,9 +59,10 @@ export const openAnimation = () => {
 export const tapTapAnimation = (div) => {
 
     const end = Date.now() + 25;
-    const colors = ['#ff69b4', '#ff1493'];
     const yPosition = Math.max(0.3, Math.min(1, (div.getBoundingClientRect().top / window.innerHeight) + 0.2));
+
     const heart = heartShape();
+    const colors = ['#FF69B4', '#FF1493'];
 
     (function frame() {
         colors.forEach((color) => {
