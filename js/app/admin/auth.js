@@ -57,9 +57,7 @@ export const auth = (() => {
     /**
      * @returns {ReturnType<typeof storage>|null}
      */
-    const getUserStorage = () => {
-        return user;
-    };
+    const getUserStorage = () => user;
 
     /**
      * @returns {void}
