@@ -8,9 +8,9 @@
 [![GitHub License](https://img.shields.io/github/license/dewanakl/undangan?color=brightgreen)](https://shields.io)
 
 ## Demo
-Untuk kamu yang ingin lihat dulu:
+Untuk kamu yang ingin melihat demo terlebih dahulu:
 
-[https://ulems.my.id/?to=Teman%20teman%20semua](https://ulems.my.id/?to=Teman%20teman%20semua)
+[https://ulems.my.id](https://ulems.my.id/?to=Teman%20teman%20semua)
 
 ## Documentation
 
@@ -19,7 +19,6 @@ Untuk kamu yang ingin lihat dulu:
 - Sesuaikan juga `data-key` dengan access key pada dashboard.
 - Self deployment backend bisa lihat dibawah ini atau ingin coba gratis selama 1 hari pada trial api.
 
-> [!TIP]
 > Jika kamu punya pertanyaan, silakan gunakan fitur `discussions` agar teman-teman yang lain juga dapat mengetahuinya.
 
 ## Deployment API
@@ -28,7 +27,7 @@ Untuk kamu yang ingin lihat dulu:
     otw
 
 - Presentation
-    [https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
+    [https://docs.google.com/presentation](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
 
 ## Trial API
 Untuk kamu yang ingin mencoba secara gratis:
