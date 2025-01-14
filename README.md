@@ -8,18 +8,19 @@
 [![GitHub License](https://img.shields.io/github/license/dewanakl/undangan?color=brightgreen)](https://shields.io)
 
 ## Demo
-Kamu dapat mencoba undangan ini melalui link berikut.
+Untuk kamu yang ingin lihat dulu:
 
 [https://ulems.my.id/?to=Teman%20teman%20semua](https://ulems.my.id/?to=Teman%20teman%20semua)
 
 ## Documentation
 
-- Sesuaikan index.html sesuai kebutuhan.
-- Ubah `data-url` pada body index dan dashboard sesuai domain backend (jika deploy sendiri).
-- Ubah juga `data-key` pada body index sesuai dengan access key pada dashboard.
-- Deployment backend bisa lihat dibawah ini atau coba gratis selama 1 hari pada trial api.
+- Ubah isi dari index.html sesuai kebutuhan.
+- Sesuaikan `data-url` pada body index dan dashboard sesuai domain backend (jika deploy sendiri).
+- Sesuaikan juga `data-key` dengan access key pada dashboard.
+- Self deployment backend bisa lihat dibawah ini atau ingin coba gratis selama 1 hari pada trial api.
 
-Jika kamu punya pertanyaan, silakan gunakan fitur `discussions` agar teman-teman yang lain juga dapat mengetahuinya. Terima kasih. 
+> [!TIP]
+> Jika kamu punya pertanyaan, silakan gunakan fitur `discussions` agar teman-teman yang lain juga dapat mengetahuinya.
 
 ## Deployment API
 
@@ -30,9 +31,9 @@ Jika kamu punya pertanyaan, silakan gunakan fitur `discussions` agar teman-teman
     [https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
 
 ## Trial API
-Untuk kamu yang ingin mencoba secara gratis, silakan kunjungi link berikut.
+Untuk kamu yang ingin mencoba secara gratis:
 
-[https://payment.ulems.my.id](https://payment.ulems.my.id)
+[https://trial.ulems.my.id](https://trial.ulems.my.id)
 
 
 ## Tech stack
