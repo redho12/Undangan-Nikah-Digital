@@ -120,6 +120,46 @@ export const util = (() => {
         return decoder.decode(decodedBytes);
     };
 
+    /**
+     * @param {string} userAgent 
+     * @returns {string}
+     */
+    const parseUserAgent = (userAgent) => {
+        const deviceTypes = [
+            { type: 'Mobile', regex: /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i },
+            { type: 'Tablet', regex: /iPad|Android(?!.*Mobile)/i },
+            { type: 'Desktop', regex: /Windows NT|Macintosh|Linux/i },
+        ];
+
+        const browsers = [
+            { name: 'Chrome', regex: /Chrome|CriOS/i },
+            { name: 'Safari', regex: /Safari/i },
+            { name: 'Edge', regex: /Edg|Edge/i },
+            { name: 'Firefox', regex: /Firefox|FxiOS/i },
+            { name: 'Opera', regex: /Opera|OPR/i },
+            { name: 'Internet Explorer', regex: /MSIE|Trident/i },
+        ];
+
+        const operatingSystems = [
+            { name: 'Windows', regex: /Windows NT ([\d.]+)/i },
+            { name: 'MacOS', regex: /Mac OS X ([\d_]+)/i },
+            { name: 'Android', regex: /Android ([\d.]+)/i },
+            { name: 'iOS', regex: /OS ([\d_]+) like Mac OS X/i },
+            { name: 'Linux', regex: /Linux/i },
+        ];
+
+        const deviceType = deviceTypes.find((device) => device.regex.test(userAgent))?.type || 'Unknown';
+        const browser = browsers.find((browser) => browser.regex.test(userAgent))?.name || 'Unknown';
+        const osMatch = operatingSystems.find((os) => os.regex.test(userAgent));
+
+        let osVersion = osMatch ? (userAgent.match(osMatch.regex)?.[1]?.replace(/_/g, '.') || '') : '';
+
+        const os = osMatch ? osMatch.name : 'Unknown';
+        osVersion = osVersion ? `${os} ${osVersion}` : os;
+
+        return `${browser} ${deviceType} ${osVersion}`;
+    };
+
     return {
         copy,
         timeOut,
@@ -128,5 +168,6 @@ export const util = (() => {
         base64Decode,
         disableButton,
         disableCheckbox,
+        parseUserAgent,
     };
 })();
