@@ -15,6 +15,7 @@ Untuk kamu yang ingin melihat demo terlebih dahulu:
 ## Documentation
 
 - Ubah isi dari index.html sesuai kebutuhan.
+- Jika tidak ingin menggunakan `komentar` bisa hapus `data-url` dan `data-key` pada body index.
 - Sesuaikan `data-url` pada body index dan dashboard sesuai domain backend (jika deploy sendiri).
 - Sesuaikan juga `data-key` dengan access key pada dashboard.
 - Self deployment backend bisa lihat dibawah ini atau ingin coba gratis selama 1 hari pada trial api.
