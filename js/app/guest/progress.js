@@ -13,15 +13,12 @@ export const progress = (() => {
     let total = 0;
     let loaded = 0;
     let valid = true;
-    let push = true;
 
     /**
      * @returns {void}
      */
     const add = () => {
-        if (push) {
-            total += 1;
-        }
+        total += 1;
     };
 
     /**
@@ -60,36 +57,12 @@ export const progress = (() => {
     };
 
     /**
-     * @returns {Promise<void>}
-     */
-    const run = async () => {
-        document.querySelectorAll('img').forEach((asset) => {
-            asset.onerror = () => {
-                invalid('image');
-            };
-            asset.onload = () => {
-                complete('image');
-            };
-
-            if (asset.complete && asset.naturalWidth !== 0 && asset.naturalHeight !== 0) {
-                complete('image');
-            } else if (asset.complete) {
-                invalid('image');
-            }
-        });
-    };
-
-    /**
      * @returns {void}
      */
     const init = () => {
         info = document.getElementById('progress-info');
         bar = document.getElementById('progress-bar');
         info.style.display = 'block';
-
-        document.querySelectorAll('img').forEach(add);
-        push = false;
-        run();
     };
 
     return {

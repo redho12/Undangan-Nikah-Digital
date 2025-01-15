@@ -154,12 +154,49 @@ export const guest = (() => {
     };
 
     /**
+     * @returns {void}
+     */
+    const imageProgress = () => {
+        /**
+         * @param {HTMLImageElement} el 
+         * @returns {void}
+         */
+        const getByFetch = (el) => {
+            fetch(el.getAttribute('data-src'))
+                .then((res) => res.blob())
+                .then((b) => {
+                    el.src = URL.createObjectURL(b);
+                    progress.complete('image');
+                })
+                .catch(() => progress.invalid('image'));
+        };
+
+        /**
+         * @param {HTMLImageElement} el 
+         * @returns {void}
+         */
+        const getByDefault = (el) => {
+            el.onerror = () => progress.invalid('image');
+            el.onload = () => progress.complete('image');
+
+            if (el.complete && el.naturalWidth !== 0 && el.naturalHeight !== 0) {
+                progress.complete('image');
+            } else if (el.complete) {
+                progress.invalid('image');
+            }
+        };
+
+        document.querySelectorAll('img').forEach((el) => el.hasAttribute('data-src') ? getByFetch(el) : getByDefault(el));
+    };
+
+    /**
      * @returns {object}
      */
     const init = () => {
         theme.init();
         session.init();
         offline.init();
+        progress.init();
         window.AOS.init();
 
         normalize();
@@ -185,9 +222,12 @@ export const guest = (() => {
             info.remove();
         }
 
+        // add total image.
+        document.querySelectorAll('img').forEach(progress.add);
+
         const token = document.body.getAttribute('data-key');
         if (!token || token.length === 0) {
-            progress.init();
+            imageProgress();
             document.getElementById('comment')?.remove();
             document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
         }
@@ -196,22 +236,32 @@ export const guest = (() => {
             // add 2 progress for config and comment.
             progress.add();
             progress.add();
-            progress.init();
+
+            const hasDataSrc = Array.from(document.querySelectorAll('img')).some((i) => i.hasAttribute('data-src'));
+            if (!hasDataSrc) {
+                imageProgress();
+            }
 
             session.setToken(token);
-            session.guest().then((res) => {
-                if (res.code !== 200) {
-                    progress.invalid('config');
-                    return;
-                }
+            session.guest()
+                .then((res) => {
+                    if (res.code !== 200) {
+                        progress.invalid('config');
+                        return;
+                    }
 
-                progress.complete('config');
+                    progress.complete('config');
 
-                comment.init();
-                comment.comment()
-                    .then(() => progress.complete('comment'))
-                    .catch(() => progress.invalid('comment'));
-            }).catch(() => progress.invalid('config'));
+                    if (hasDataSrc) {
+                        imageProgress();
+                    }
+
+                    comment.init();
+                    comment.comment()
+                        .then(() => progress.complete('comment'))
+                        .catch(() => progress.invalid('comment'));
+                })
+                .catch(() => progress.invalid('config'));
         }
 
         return {
