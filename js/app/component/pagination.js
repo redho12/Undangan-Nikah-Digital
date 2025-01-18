@@ -45,6 +45,11 @@ export const pagination = (() => {
     const getNext = () => pageNow;
 
     /**
+     * @returns {number}
+     */
+    const getResultData = () => resultData;
+
+    /**
      * @returns {void}
      */
     const disabledPrevious = () => !liPrev.classList.contains('disabled') ? liPrev.classList.add('disabled') : null;
@@ -216,6 +221,7 @@ export const pagination = (() => {
         getNext,
         reset,
         setResultData,
+        getResultData,
         previous,
         next,
     };

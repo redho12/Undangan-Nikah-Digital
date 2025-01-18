@@ -26,25 +26,31 @@ export const dto = (() => {
     };
 
     /**
-     * @param {{uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string}} postComment
-     * @returns {{uuid: string, own: string, name: string, presence: boolean, comment: string, is_admin: boolean, created_at: string, comments: postCommentResponse[], like: {love: number}}}
+     * @param {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: {love: number} }} data
+     * @returns {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: likeCommentResponse }}
      */
-    const postCommentResponse = ({ uuid, own, name, presence, comment, created_at }) => {
-        let is_admin = false;
-        let comments = [];
-        let like = likeCommentResponse();
-
+    const getCommentResponse = ({ uuid, own, name, presence, comment, created_at, is_admin, ip, user_agent, comments, like }) => {
         return {
             uuid,
             own,
             name,
             presence,
             comment,
-            is_admin,
             created_at,
-            comments,
-            like,
+            is_admin: is_admin ?? false,
+            ip,
+            user_agent,
+            comments: comments?.map(getCommentResponse) ?? [],
+            like: likeCommentResponse(like?.love ?? 0),
         };
+    };
+
+    /**
+     * @param {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: { love: number } }[]} data
+     * @returns {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: likeCommentResponse }[]}
+     */
+    const getCommentsResponse = (data) => {
+        return data.map(getCommentResponse);
     };
 
     /**
@@ -150,7 +156,8 @@ export const dto = (() => {
         statusResponse,
         commentResponse,
         likeCommentResponse,
-        postCommentResponse,
+        getCommentResponse,
+        getCommentsResponse,
         commentShowMore,
         postCommentRequest,
         postSessionRequest,

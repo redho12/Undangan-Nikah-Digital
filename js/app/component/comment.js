@@ -10,15 +10,38 @@ import { request, HTTP_GET, HTTP_POST, HTTP_DELETE, HTTP_PUT } from '../../conne
 
 export const comment = (() => {
 
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
     let owns = null;
+
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
     let user = null;
+
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
     let tracker = null;
+
+    /**
+     * @type {ReturnType<typeof storage>|null}
+     */
     let showHide = null;
 
+    /**
+     * @returns {string}
+     */
     const onNullComment = () => {
         return `<div class="text-center p-4 my-2 bg-theme-${theme.isDarkMode('dark', 'light')} rounded-4 shadow"><p class="fw-bold p-0 m-0" style="font-size: 0.95rem;">Yuk bagikan undangan ini biar banyak komentarnya</p></div>`;
     };
 
+    /**
+     * @param {string} id 
+     * @param {boolean} disabled 
+     * @returns {void}
+     */
     const changeButton = (id, disabled) => {
         document.querySelector(`[data-button-action="${id}"]`).childNodes.forEach((e) => {
             e.disabled = disabled;
@@ -175,12 +198,14 @@ export const comment = (() => {
         }
 
         if (nameValue.length == 0) {
+            name.scrollIntoView({ behavior: 'smooth' });
             alert('Silakan masukkan nama Anda.');
             return;
         }
 
         const presence = document.getElementById('form-presence');
         if (!id && presence && presence.value == '0') {
+            presence.scrollIntoView({ behavior: 'smooth' });
             alert('Silakan pilih status kehadiran Anda.');
             return;
         }
@@ -216,7 +241,7 @@ export const comment = (() => {
         const response = await request(HTTP_POST, '/api/comment')
             .token(session.getToken())
             .body(dto.postCommentRequest(id, nameValue, isPresence, form.value))
-            .send(dto.postCommentResponse)
+            .send(dto.getCommentResponse)
             .then((res) => res, () => null);
 
         if (name) {
@@ -252,7 +277,7 @@ export const comment = (() => {
             const comments = document.getElementById('comments');
             pagination.setResultData(comments.children.length);
 
-            if (comments.children.length == pagination.getPer()) {
+            if (pagination.getResultData() == pagination.getPer()) {
                 comments.lastElementChild.remove();
             }
 
@@ -285,7 +310,7 @@ export const comment = (() => {
             containerDiv.querySelector(`button[onclick="undangan.comment.like.like(this)"][data-uuid="${id}"]`).insertAdjacentHTML('beforebegin', card.renderReadMore(id, anchorTag ? anchorTag.getAttribute('data-uuids').split(',').concat(uuids) : uuids));
         }
 
-        addEventLike(response.data);
+        addListenerLike(response.data);
     };
 
     const cancel = (id) => {
@@ -358,7 +383,7 @@ export const comment = (() => {
 
         return request(HTTP_GET, `/api/comment?per=${pagination.getPer()}&next=${pagination.getNext()}`)
             .token(session.getToken())
-            .send()
+            .send(dto.getCommentsResponse)
             .then((res) => {
                 pagination.setResultData(res.data.length);
                 comments.setAttribute('data-loading', 'false');
@@ -386,7 +411,7 @@ export const comment = (() => {
                 comments.innerHTML = res.data.map((c) => card.renderContent(c)).join('');
 
                 res.data.forEach(fetchTracker);
-                res.data.forEach(addEventLike);
+                res.data.forEach(addListenerLike);
 
                 return res;
             });
@@ -424,6 +449,11 @@ export const comment = (() => {
         }
     };
 
+    /**
+     * @param {HTMLAnchorElement} anchor 
+     * @param {string} uuid 
+     * @returns {void}
+     */
     const showMore = (anchor, uuid) => {
         const comment = document.getElementById(`content-${uuid}`);
         const original = util.base64Decode(comment.getAttribute('data-comment'));
@@ -434,15 +464,23 @@ export const comment = (() => {
         anchor.setAttribute('data-show', isCollapsed ? 'true' : 'false');
     };
 
-    const addEventLike = (comment) => {
+    /**
+     * @param {ReturnType<typeof dto.getCommentResponse>} comment
+     * @returns {void}
+     */
+    const addListenerLike = (comment) => {
         if (comment.comments) {
-            comment.comments.forEach(addEventLike);
+            comment.comments.forEach(addListenerLike);
         }
 
         const bodyLike = document.getElementById(`body-content-${comment.uuid}`);
         bodyLike.addEventListener('touchend', () => like.tapTap(bodyLike));
     };
 
+    /**
+     * @param {ReturnType<typeof dto.getCommentResponse>} comment
+     * @returns {void}
+     */
     const fetchTracker = (comment) => {
         if (!session.isAdmin()) {
             return;
@@ -473,8 +511,14 @@ export const comment = (() => {
             });
     };
 
+    /**
+     * @returns {void}
+     */
     const scroll = () => document.getElementById('comments').scrollIntoView({ behavior: 'smooth' });
 
+    /**
+     * @returns {void}
+     */
     const init = () => {
         like.init();
         card.init();
