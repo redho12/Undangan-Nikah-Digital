@@ -26,8 +26,8 @@ export const dto = (() => {
     };
 
     /**
-     * @param {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: {love: number} }} data
-     * @returns {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: likeCommentResponse }}
+     * @param {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: ReturnType<getCommentResponse>[], like: {love: number} }} data
+     * @returns {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: ReturnType<getCommentResponse>[], like: ReturnType<likeCommentResponse> }}
      */
     const getCommentResponse = ({ uuid, own, name, presence, comment, created_at, is_admin, ip, user_agent, comments, like }) => {
         return {
@@ -46,8 +46,8 @@ export const dto = (() => {
     };
 
     /**
-     * @param {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: { love: number } }[]} data
-     * @returns {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: getCommentResponse[], like: likeCommentResponse }[]}
+     * @param {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: ReturnType<getCommentResponse>[], like: { love: number } }[]} data
+     * @returns {{ uuid: string, own: string, name: string, presence: boolean, comment: string, created_at: string, is_admin: boolean, ip: string, user_agent: string, comments: ReturnType<getCommentResponse>[], like: ReturnType<likeCommentResponse> }[]}
      */
     const getCommentsResponse = (data) => {
         return data.map(getCommentResponse);

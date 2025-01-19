@@ -198,14 +198,16 @@ export const comment = (() => {
         }
 
         if (nameValue.length == 0) {
-            name.scrollIntoView({ behavior: 'smooth' });
+            if (id) {
+                name.scrollIntoView({ behavior: 'smooth' });
+            }
+
             alert('Silakan masukkan nama Anda.');
             return;
         }
 
         const presence = document.getElementById('form-presence');
         if (!id && presence && presence.value == '0') {
-            presence.scrollIntoView({ behavior: 'smooth' });
             alert('Silakan pilih status kehadiran Anda.');
             return;
         }
