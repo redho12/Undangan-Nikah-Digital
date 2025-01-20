@@ -58,7 +58,7 @@ export const audio = (() => {
         audio.autoplay = false;
         audio.controls = false;
 
-        play();
+        audio.addEventListener('canplay', play);
         music.addEventListener('offline', pause);
         music.addEventListener('click', () => isPlay ? pause() : play());
     };
