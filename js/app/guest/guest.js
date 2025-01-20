@@ -157,16 +157,24 @@ export const guest = (() => {
      * @returns {void}
      */
     const imageProgress = () => {
+        const uniqueUrl = new Map();
+
         /**
          * @param {HTMLImageElement} el 
-         * @returns {void}
+         * @returns {Promise<void>}
          */
-        const getByFetch = (el) => {
+        const getByFetch = async (el) => {
             // 6 hour TTL
             const ttl = 1000 * 60 * 60 * 6;
             const url = el.getAttribute('data-src');
             const exp = 'x-expiration-time';
             const cacheName = 'image_cache';
+
+            if (uniqueUrl.has(url)) {
+                el.src = uniqueUrl.get(url);
+                progress.complete('image');
+                return;
+            }
 
             /**
              * @param {Cache} cache 
@@ -181,8 +189,8 @@ export const guest = (() => {
                 }));
             };
 
-            caches.open(cacheName).then((cache) => {
-                cache.match(url).then((res) => {
+            return caches.open(cacheName).then((cache) => {
+                return cache.match(url).then((res) => {
                     if (!res) {
                         return fetchPut(cache);
                     }
@@ -194,6 +202,7 @@ export const guest = (() => {
                     return cache.delete(url).then((s) => s ? fetchPut(cache) : res.blob());
                 }).then((b) => {
                     el.src = URL.createObjectURL(b);
+                    uniqueUrl.set(url, el.src);
                     progress.complete('image');
                 })
             }).catch(() => progress.invalid('image'));
@@ -214,7 +223,7 @@ export const guest = (() => {
             }
         };
 
-        document.querySelectorAll('img').forEach((el) => el.hasAttribute('data-src') ? getByFetch(el) : getByDefault(el));
+        document.querySelectorAll('img').forEach(async (el) => el.hasAttribute('data-src') ? await getByFetch(el) : getByDefault(el));
     };
 
     /**
