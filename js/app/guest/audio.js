@@ -19,6 +19,10 @@ export const audio = (() => {
      * @returns {Promise<void>}
      */
     const play = async () => {
+        if (!navigator.onLine) {
+            return;
+        }
+
         music.disabled = true;
         try {
             await audio.play();

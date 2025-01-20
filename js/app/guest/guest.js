@@ -157,6 +157,9 @@ export const guest = (() => {
      * @returns {void}
      */
     const imageProgress = () => {
+        /**
+         * @type {Map<string, string>}
+         */
         const uniqueUrl = new Map();
 
         /**
@@ -177,29 +180,29 @@ export const guest = (() => {
             }
 
             /**
-             * @param {Cache} cache 
+             * @param {Cache} c 
              * @returns {Promise<blob>}
              */
-            const fetchPut = (cache) => {
+            const fetchPut = (c) => {
                 return fetch(url).then((res) => res.blob().then((b) => {
                     const headers = new Headers(res.headers);
                     headers.append(exp, String(Date.now() + ttl));
 
-                    return cache.put(url, new Response(b, { headers })).then(() => b);
+                    return c.put(url, new Response(b, { headers })).then(() => b);
                 }));
             };
 
-            return caches.open(cacheName).then((cache) => {
-                return cache.match(url).then((res) => {
+            await caches.open(cacheName).then((c) => {
+                return c.match(url).then((res) => {
                     if (!res) {
-                        return fetchPut(cache);
+                        return fetchPut(c);
                     }
 
-                    if (Date.now() <= parseInt(res.headers.get(exp), 10)) {
+                    if (Date.now() <= parseInt(res.headers.get(exp))) {
                         return res.blob();
                     }
 
-                    return cache.delete(url).then((s) => s ? fetchPut(cache) : res.blob());
+                    return c.delete(url).then((s) => s ? fetchPut(c) : res.blob());
                 }).then((b) => {
                     el.src = URL.createObjectURL(b);
                     uniqueUrl.set(url, el.src);
@@ -223,7 +226,15 @@ export const guest = (() => {
             }
         };
 
-        document.querySelectorAll('img').forEach(async (el) => el.hasAttribute('data-src') ? await getByFetch(el) : getByDefault(el));
+        (async (els) => {
+            for (const el of els) {
+                if (el.hasAttribute('data-src')) {
+                    await getByFetch(el);
+                } else {
+                    getByDefault(el);
+                }
+            }
+        })(document.querySelectorAll('img'));
     };
 
     /**
