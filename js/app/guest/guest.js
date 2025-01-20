@@ -105,7 +105,6 @@ export const guest = (() => {
      */
     const open = (button) => {
         button.disabled = true;
-        document.body.scrollIntoView({ behavior: 'instant' });
 
         if (!theme.isAutoMode()) {
             document.getElementById('button-theme').style.display = 'none';
@@ -164,12 +163,14 @@ export const guest = (() => {
         offline.init();
         progress.init();
 
-        countDownDate();
-        normalizeArabicFont();
         information = storage('information');
-
-        document.addEventListener('progressDone', showGuestName);
-        document.addEventListener('progressDone', window.AOS.init);
+        document.addEventListener('progressDone', () => {
+            countDownDate();
+            showGuestName();
+            window.AOS.init();
+            normalizeArabicFont();
+            document.body.scrollIntoView({ behavior: 'instant' });
+        });
 
         if (session.isAdmin()) {
             storage('user').clear();
@@ -198,6 +199,7 @@ export const guest = (() => {
 
         if (token.length > 0) {
             // add 2 progress for config and comment.
+            // before load image.
             progress.add();
             progress.add();
 

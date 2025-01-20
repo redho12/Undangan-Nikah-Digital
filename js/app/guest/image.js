@@ -5,7 +5,7 @@ export const image = (() => {
     /**
      * @type {Map<string, string>}
      */
-    let uniqueUrl = null;
+    let uniqUrl = null;
 
     /**
      * @type {NodeListOf<HTMLImageElement>}
@@ -14,10 +14,10 @@ export const image = (() => {
 
     let hasSrc = true;
 
-    // 6 hour TTL
-    const ttl = 1000 * 60 * 60 * 6;
+    // default 6 hour TTL
+    let ttl = 1000 * 60 * 60 * 6;
 
-    const cacheName = 'image_cache';
+    const cacheName = 'images';
 
     /**
      * @param {HTMLImageElement} el 
@@ -27,8 +27,8 @@ export const image = (() => {
         const url = el.getAttribute('data-src');
         const exp = 'x-expiration-time';
 
-        if (uniqueUrl.has(url)) {
-            el.src = uniqueUrl.get(url);
+        if (uniqUrl.has(url)) {
+            el.src = uniqUrl.get(url);
             progress.complete('image');
             return;
         }
@@ -59,7 +59,7 @@ export const image = (() => {
                 return c.delete(url).then((s) => s ? fetchPut(c) : res.blob());
             }).then((b) => {
                 el.src = URL.createObjectURL(b);
-                uniqueUrl.set(url, el.src);
+                uniqUrl.set(url, el.src);
                 progress.complete('image');
             })
         }).catch(() => progress.invalid('image'));
@@ -86,6 +86,14 @@ export const image = (() => {
     const hasDataSrc = () => hasSrc;
 
     /**
+     * @param {number} v
+     * @returns {void} 
+     */
+    const setTtl = (v) => {
+        ttl = Number(v)
+    };
+
+    /**
      * @returns {void}
      */
     const load = () => {
@@ -104,7 +112,7 @@ export const image = (() => {
      * @returns {object}
      */
     const init = () => {
-        uniqueUrl = new Map();
+        uniqUrl = new Map();
         images = document.querySelectorAll('img');
 
         images.forEach(progress.add);
@@ -112,6 +120,7 @@ export const image = (() => {
 
         return {
             load,
+            setTtl,
             hasDataSrc,
         };
     };
