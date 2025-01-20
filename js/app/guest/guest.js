@@ -162,13 +162,41 @@ export const guest = (() => {
          * @returns {void}
          */
         const getByFetch = (el) => {
-            fetch(el.getAttribute('data-src'))
-                .then((res) => res.blob())
-                .then((b) => {
+            // 6 hour TTL
+            const ttl = 1000 * 60 * 60 * 6;
+            const url = el.getAttribute('data-src');
+            const exp = 'x-expiration-time';
+            const cacheName = 'image_cache';
+
+            /**
+             * @param {Cache} cache 
+             * @returns {Promise<blob>}
+             */
+            const fetchPut = (cache) => {
+                return fetch(url).then((res) => res.blob().then((b) => {
+                    const headers = new Headers(res.headers);
+                    headers.append(exp, String(Date.now() + ttl));
+
+                    return cache.put(url, new Response(b, { headers })).then(() => b);
+                }));
+            };
+
+            caches.open(cacheName).then((cache) => {
+                cache.match(url).then((res) => {
+                    if (!res) {
+                        return fetchPut(cache);
+                    }
+
+                    if (Date.now() <= parseInt(res.headers.get(exp), 10)) {
+                        return res.blob();
+                    }
+
+                    return cache.delete(url).then((s) => s ? fetchPut(cache) : res.blob());
+                }).then((b) => {
                     el.src = URL.createObjectURL(b);
                     progress.complete('image');
                 })
-                .catch(() => progress.invalid('image'));
+            }).catch(() => progress.invalid('image'));
         };
 
         /**
