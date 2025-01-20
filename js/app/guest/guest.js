@@ -234,12 +234,14 @@ export const guest = (() => {
         session.init();
         offline.init();
         progress.init();
-        window.AOS.init();
 
         normalize();
         countDownDate();
         information = storage('information');
-        document.addEventListener('progressDone', showGuestName);
+        document.addEventListener('progressDone', () => {
+            showGuestName();
+            window.AOS.init();
+        });
 
         if (session.isAdmin()) {
             storage('user').clear();
