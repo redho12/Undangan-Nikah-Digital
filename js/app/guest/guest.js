@@ -1,3 +1,4 @@
+import { image } from './image.js';
 import { audio } from './audio.js';
 import { progress } from './progress.js';
 import { util } from '../../common/util.js';
@@ -83,7 +84,8 @@ export const guest = (() => {
             div.classList.add('m-2');
             div.innerHTML = `
                 <p class="mt-0 mb-1 mx-0 p-0" style="font-size: 0.95rem;">${guest?.getAttribute('data-message')}</p>
-                <h2 class="m-0 p-0">${util.escapeHtml(name)}</h2>`;
+                <h2 class="m-0 p-0">${util.escapeHtml(name)}</h2>
+            `;
 
             guest?.appendChild(div);
         }
@@ -147,94 +149,10 @@ export const guest = (() => {
     /**
      * @returns {void}
      */
-    const normalize = () => {
+    const normalizeArabicFont = () => {
         document.querySelectorAll('.font-arabic').forEach((el) => {
             el.innerHTML = String(el.innerHTML).normalize('NFC');
         });
-    };
-
-    /**
-     * @returns {void}
-     */
-    const imageProgress = () => {
-        /**
-         * @type {Map<string, string>}
-         */
-        const uniqueUrl = new Map();
-
-        /**
-         * @param {HTMLImageElement} el 
-         * @returns {Promise<void>}
-         */
-        const getByFetch = async (el) => {
-            // 6 hour TTL
-            const ttl = 1000 * 60 * 60 * 6;
-            const url = el.getAttribute('data-src');
-            const exp = 'x-expiration-time';
-            const cacheName = 'image_cache';
-
-            if (uniqueUrl.has(url)) {
-                el.src = uniqueUrl.get(url);
-                progress.complete('image');
-                return;
-            }
-
-            /**
-             * @param {Cache} c 
-             * @returns {Promise<blob>}
-             */
-            const fetchPut = (c) => {
-                return fetch(url).then((res) => res.blob().then((b) => {
-                    const headers = new Headers(res.headers);
-                    headers.append(exp, String(Date.now() + ttl));
-
-                    return c.put(url, new Response(b, { headers })).then(() => b);
-                }));
-            };
-
-            await caches.open(cacheName).then((c) => {
-                return c.match(url).then((res) => {
-                    if (!res) {
-                        return fetchPut(c);
-                    }
-
-                    if (Date.now() <= parseInt(res.headers.get(exp))) {
-                        return res.blob();
-                    }
-
-                    return c.delete(url).then((s) => s ? fetchPut(c) : res.blob());
-                }).then((b) => {
-                    el.src = URL.createObjectURL(b);
-                    uniqueUrl.set(url, el.src);
-                    progress.complete('image');
-                })
-            }).catch(() => progress.invalid('image'));
-        };
-
-        /**
-         * @param {HTMLImageElement} el 
-         * @returns {void}
-         */
-        const getByDefault = (el) => {
-            el.onerror = () => progress.invalid('image');
-            el.onload = () => progress.complete('image');
-
-            if (el.complete && el.naturalWidth !== 0 && el.naturalHeight !== 0) {
-                progress.complete('image');
-            } else if (el.complete) {
-                progress.invalid('image');
-            }
-        };
-
-        (async (els) => {
-            for (const el of els) {
-                if (el.hasAttribute('data-src')) {
-                    await getByFetch(el);
-                } else {
-                    getByDefault(el);
-                }
-            }
-        })(document.querySelectorAll('img'));
     };
 
     /**
@@ -246,13 +164,12 @@ export const guest = (() => {
         offline.init();
         progress.init();
 
-        normalize();
         countDownDate();
+        normalizeArabicFont();
         information = storage('information');
-        document.addEventListener('progressDone', () => {
-            showGuestName();
-            window.AOS.init();
-        });
+
+        document.addEventListener('progressDone', showGuestName);
+        document.addEventListener('progressDone', window.AOS.init);
 
         if (session.isAdmin()) {
             storage('user').clear();
@@ -272,12 +189,9 @@ export const guest = (() => {
             info.remove();
         }
 
-        // add total image.
-        document.querySelectorAll('img').forEach(progress.add);
-
         const token = document.body.getAttribute('data-key');
         if (!token || token.length === 0) {
-            imageProgress();
+            image.init().load();
             document.getElementById('comment')?.remove();
             document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
         }
@@ -287,31 +201,28 @@ export const guest = (() => {
             progress.add();
             progress.add();
 
-            const hasDataSrc = Array.from(document.querySelectorAll('img')).some((i) => i.hasAttribute('data-src'));
-            if (!hasDataSrc) {
-                imageProgress();
+            const img = image.init();
+            if (!img.hasDataSrc()) {
+                img.load();
             }
 
             session.setToken(token);
-            session.guest()
-                .then((res) => {
-                    if (res.code !== 200) {
-                        progress.invalid('config');
-                        return;
-                    }
+            session.guest().then((res) => {
+                if (res.code !== 200) {
+                    progress.invalid('config');
+                    return;
+                }
 
-                    progress.complete('config');
+                progress.complete('config');
+                if (img.hasDataSrc()) {
+                    img.load();
+                }
 
-                    if (hasDataSrc) {
-                        imageProgress();
-                    }
-
-                    comment.init();
-                    comment.comment()
-                        .then(() => progress.complete('comment'))
-                        .catch(() => progress.invalid('comment'));
-                })
-                .catch(() => progress.invalid('config'));
+                comment.init();
+                comment.comment()
+                    .then(() => progress.complete('comment'))
+                    .catch(() => progress.invalid('comment'));
+            }).catch(() => progress.invalid('config'));
         }
 
         return {
