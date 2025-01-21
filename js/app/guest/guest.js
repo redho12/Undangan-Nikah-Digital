@@ -138,19 +138,20 @@ export const guest = (() => {
     const closeInformation = () => information.set('info', true);
 
     /**
-     * @param {HTMLElement} svg
-     * @param {number} timeout
-     * @param {string} classes
-     * @returns {void}
-     */
-    const animate = (svg, timeout, classes) => util.timeOut(() => svg.classList.add(classes), timeout);
-
-    /**
      * @returns {void}
      */
     const normalizeArabicFont = () => {
         document.querySelectorAll('.font-arabic').forEach((el) => {
             el.innerHTML = String(el.innerHTML).normalize('NFC');
+        });
+    };
+
+    /**
+     * @returns {void}
+     */
+    const animateSvg = () => {
+        document.querySelectorAll('svg').forEach((el) => {
+            util.timeOut(() => el.classList.add(el.getAttribute('data-class')), parseInt(el.getAttribute('data-time')));
         });
     };
 
@@ -165,11 +166,12 @@ export const guest = (() => {
 
         information = storage('information');
         document.addEventListener('progressDone', () => {
+            document.body.scrollIntoView({ behavior: 'instant' });
+            normalizeArabicFont();
+            window.AOS.init();
             countDownDate();
             showGuestName();
-            window.AOS.init();
-            normalizeArabicFont();
-            document.body.scrollIntoView({ behavior: 'instant' });
+            animateSvg();
         });
 
         if (session.isAdmin()) {
@@ -208,23 +210,26 @@ export const guest = (() => {
                 img.load();
             }
 
-            session.setToken(token);
-            session.guest().then((res) => {
-                if (res.code !== 200) {
-                    progress.invalid('config');
-                    return;
-                }
+            // fetch after document is loaded.
+            window.addEventListener('load', () => {
+                session.setToken(token);
+                session.guest().then((res) => {
+                    if (res.code !== 200) {
+                        progress.invalid('config');
+                        return;
+                    }
 
-                progress.complete('config');
-                if (img.hasDataSrc()) {
-                    img.load();
-                }
+                    progress.complete('config');
+                    if (img.hasDataSrc()) {
+                        img.load();
+                    }
 
-                comment.init();
-                comment.comment()
-                    .then(() => progress.complete('comment'))
-                    .catch(() => progress.invalid('comment'));
-            }).catch(() => progress.invalid('config'));
+                    comment.init();
+                    comment.comment()
+                        .then(() => progress.complete('comment'))
+                        .catch(() => progress.invalid('comment'));
+                }).catch(() => progress.invalid('config'));
+            });
         }
 
         return {
@@ -234,7 +239,6 @@ export const guest = (() => {
             guest: {
                 open,
                 modal,
-                animate,
                 closeInformation,
             },
         };
