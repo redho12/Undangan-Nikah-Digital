@@ -55,7 +55,7 @@ export const session = (() => {
      */
     const guest = () => {
         return request(HTTP_GET, '/api/config')
-            .token(document.body.getAttribute('data-key'))
+            .token(getToken())
             .send()
             .then((res) => {
                 if (res.code !== 200) {

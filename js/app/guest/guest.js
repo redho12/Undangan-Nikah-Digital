@@ -212,7 +212,9 @@ export const guest = (() => {
 
             // fetch after document is loaded.
             window.addEventListener('load', () => {
-                session.setToken(token);
+                const params = new URLSearchParams(window.location.search);
+
+                session.setToken(params.get('k') ?? token);
                 session.guest().then((res) => {
                     if (res.code !== 200) {
                         progress.invalid('config');
