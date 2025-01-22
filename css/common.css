@@ -38,3 +38,13 @@ svg>path {
 .bg-theme-dark {
     background-color: var(--bs-gray-800);
 }
+
+/* Custom styling for Disqus */
+#disqus_thread {
+    background-color: transparent; /* Membuat latar belakang Disqus transparan */
+    color: inherit; /* Mengikuti warna teks tema utama */
+}
+
+#disqus_thread iframe {
+    background: transparent !important; /* Membuat latar belakang iframe transparan */
+}
